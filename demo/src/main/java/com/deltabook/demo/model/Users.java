@@ -2,7 +2,6 @@ package com.deltabook.demo.model;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -13,15 +12,15 @@ public class Users {
     private Long id;
 
     private String login;
-    private String role;
+    private enum role {ROLE_ADMIN, ROLE_USER};
     private String password;
-    private String first_name;
-    private String last_name;
+    private String firstName;
+    private String lastName;
     private String picture;
 
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
-    private List<Contacts> contacts;
+    private List<Contact> contact;
 
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
-    private List<Messages> messages;
+    private List<Message> message;
 }

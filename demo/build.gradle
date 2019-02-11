@@ -27,7 +27,3 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
 }
-
-configurations.all {
-    exclude module: 'slf4j-log4j12'
-}
