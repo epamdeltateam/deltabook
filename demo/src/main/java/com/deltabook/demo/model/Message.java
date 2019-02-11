@@ -11,11 +11,11 @@ public class Message {
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "sender_id")
-    private User userSender;
+    @JoinColumn(name = "senderID_id")
+    private User senderID;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "recipient_id")
-    private User userRecipient;
+    @JoinColumn(name = "recipientID_id")
+    private User recipientID;
     private String body;
     private Date createdAt;
 }
