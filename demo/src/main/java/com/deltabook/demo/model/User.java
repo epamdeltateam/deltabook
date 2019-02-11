@@ -19,8 +19,8 @@ public class User {
     private String picture;
 
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
-    private List<Contact> contact;
+    private List<Contact> contacts;
 
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
-    private List<Message> message;
+    private List<Message> messages;
 }
