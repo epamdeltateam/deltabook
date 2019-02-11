@@ -12,10 +12,10 @@ public class Message {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sender_id")
-    private Users user1;
+    private User userSender;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "recipient_id")
-    private Users user2;
+    private User userRecipient;
     private String body;
-    private Date created_at;
+    private Date createdAt;
 }

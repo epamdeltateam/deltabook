@@ -10,10 +10,10 @@ public class Contact {
     private Long id;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "friend_from_id")
-    private Users friend_from_id;
+    private User friendFromId;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "friend_to_id")
-    private Users friend_to_id;
+    private User friendToId;
     private boolean isAccepted;
     private String requestMessage;
 }
