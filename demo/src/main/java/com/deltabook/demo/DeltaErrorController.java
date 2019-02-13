@@ -16,4 +16,9 @@ public class DeltaErrorController implements ErrorController {
     public String getErrorPath() {
         return "/error";
     }
+
+    @RequestMapping("/error_auth")
+    public String AuthError() {
+        return "error_auth";
+    }
 }
