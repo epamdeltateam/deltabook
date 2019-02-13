@@ -11,6 +11,8 @@
 <form action="#" th:action="@{/enter_reg}" th:object="${objectToFill}" method="post">
 <p>Login: <input type="text" th:field="*{login}" /></p>
 <p>Password: <input type="text" th:field="*{password}" /></p>
+<p>Name: <input type="text" th:field="*{firstName}" /></p>
+<p>SurnName: <input type="text" th:field="*{lastName}" /></p>
 <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 </form>
 </body>

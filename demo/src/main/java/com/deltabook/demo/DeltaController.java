@@ -31,7 +31,7 @@ public class DeltaController {
 
     @RequestMapping( value = "/enter_reg", method = RequestMethod.POST)
     String reg(@ModelAttribute User insertedObject, Model model) {
-        userRepository.save(new User(insertedObject.getLogin(), insertedObject.getPassword()));
+        userRepository.save(new User(insertedObject.getLogin(), insertedObject.getPassword(),insertedObject.getFirstName(), insertedObject.getLastName() ));
         model.addAttribute("objectToFill_auth", new User ());
         return "main";
     }
