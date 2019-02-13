@@ -1,5 +1,6 @@
-package com.deltabook;
+package com.deltabook.controller;
 
+import com.deltabook.model.SendMessage;
 import com.deltabook.model.*;
 import com.deltabook.repositories.ContactRepository;
 import com.deltabook.repositories.MessageRepository;
@@ -10,13 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.ArrayList;
-import java.util.Collection;
 
 @Controller
-public class DeltaController {
+public class UserController {
     @Autowired
     private UserRepository userRepository;
 
@@ -70,7 +67,7 @@ public class DeltaController {
 
     @RequestMapping( value = "/send_message")
     String send_message(Model model) {
-        model.addAttribute("recipient", new SendMessage ());
+        model.addAttribute("recipient", new SendMessage());
         return "send_message";
     }
     @RequestMapping( value = "/add_user")
