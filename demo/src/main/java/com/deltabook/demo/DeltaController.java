@@ -30,13 +30,13 @@ public class DeltaController {
     }
 
     @RequestMapping( value = "/enter_reg", method = RequestMethod.POST)
-    String sum(@ModelAttribute User insertedObject, Model model) {
+    String reg(@ModelAttribute User insertedObject, Model model) {
         userRepository.save(new User(insertedObject.getLogin(), insertedObject.getPassword()));
         model.addAttribute("objectToFill_auth", new User ());
         return "main";
     }
     @RequestMapping( value = "/enter_auth", method = RequestMethod.POST)
-    String sum2(@ModelAttribute User insertedObject, Model model) {
+    String auth(@ModelAttribute User insertedObject, Model model) {
         model.addAttribute("objectToFill_auth", new User ());
         Iterable<User> iter =  userRepository.findLogPass(insertedObject.getLogin(), insertedObject.getPassword());
         Collection<User> list = new ArrayList<User>();
