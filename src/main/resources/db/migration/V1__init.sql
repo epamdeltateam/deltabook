@@ -5,7 +5,7 @@ CREATE TABLE users (
 	password varchar(100) not null,
 	first_name varchar(40),
 	last_name varchar(40),
-	picture clob
+	picture blob
 );
 
 CREATE TABLE messages (

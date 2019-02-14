@@ -74,11 +74,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getPicture() {
+    public byte[] getPicture() {
         return picture;
     }
 
-    public void setPicture(String picture) {
+    public void setPicture(byte[] picture) {
         this.picture = picture;
     }
 
@@ -89,7 +89,7 @@ public class User {
     private String lastName;
 
     @Lob
-    private String picture;
+    private byte[] picture;
 
     @OneToMany(mappedBy = "friendFromId", cascade = CascadeType.ALL)
     private List<Contact> contacts_from;
