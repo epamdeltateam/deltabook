@@ -2,16 +2,40 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
     <title>DeltaBook registration</title>
 </head>
 <body>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    function doAjax() {
+        $.ajax({
+            url: 'checkStrength',
+            data: ({password : $('#password').val()}),
+            success: function(data) {
+                $('#strengthValue').html(data);
+                var col=document.getElementById("strengthValue");
+                if(data == "слабый")
+                col.style.color="#ff4000";
+                else if(data == "средний")
+                    col.style.color="#00bfff";
+                else if(data == "сильный")
+                    col.style.color="#00ff00";
+
+            }
+        });
+    }
+</script>
 <img src="../static/images/logo.png" width="419" th:src="@{images/logo.png}"/>
 <h1>Регистрация на ДельтаБуке</h1>
 <form action="#" th:action="@{/registration}" th:object="${objectToFill}" method="post">
 <p>Login: </p>
 <input type="text" th:field="*{login}" />
 <p>Password:</p>
-<input type="text" th:field="*{password}" />
+<input type="text" id="password" th:field="*{password}" th:onkeyup="doAjax()"  />
+    <span id="strengthValue">
+			</span>
 <p>Name: </p>
 <input type="text" th:field="*{firstName}" />
 <p>Surname: </p>
