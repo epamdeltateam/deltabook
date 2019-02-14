@@ -8,9 +8,12 @@
 <body>
 <img src="../static/images/logo.png" width="419" th:src="@{images/logo.png}"/>
 <h1>Отправка сообщения</h1>
+<a href="/user_panel">Назад в панель пользователя</a>
 <form action="#" th:action="@{/enter_message_data}" th:object="${recipient}" method="post">
-    <p>Friend NickName: <input type="text" th:field="*{Nickanme}" /></p>
-    <p>Body: <input type="text" th:field="*{Body}" /></p>
+    <p>Friend NickName:</p>
+    <input type="text" th:field="*{Nickanme}" />
+    <p>Body:</p>
+    <input type="text" th:field="*{Body}" />
     <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 </form>
 </body>

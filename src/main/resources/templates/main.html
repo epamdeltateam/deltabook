@@ -9,8 +9,10 @@
 <img src="../static/images/logo.png" width="419" th:src="@{images/logo.png}"/>
 <h1>Вход</h1>
 <form action="#" th:action="@{/enter_auth}" th:object="${objectToFill_auth}" method="post">
-    <p>Login: <input type="text" th:field="*{login}" /></p>
-    <p>Password: <input type="text" th:field="*{password}" /></p>
+    <p>Login:</p>
+    <input type="text" th:field="*{login}" /></p>
+    <p>Password:</p>
+    <input type="password" th:field="*{password}" /></p>
     <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 </form>
 <a href="/registration">Регистрация</a>

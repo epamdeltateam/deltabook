@@ -8,8 +8,10 @@
 <body>
 <img src="../static/images/logo.png" width="419" th:src="@{images/logo.png}"/>
 <h1>Добавление в друзья</h1>
+<a href="/user_panel">Назад в панель пользователя</a>
 <form action="#" th:action="@{/enter_add_friend}" th:object="${user_to}" method="post">
-    <p>Friend NickName: <input type="text" th:field="*{login}" /></p>
+    <p>Friend NickName:</p>
+    <input type="text" th:field="*{login}" />
     <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 </form>
 </body>

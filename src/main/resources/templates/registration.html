@@ -2,17 +2,20 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
     <title>DeltaBook registration</title>
 </head>
 <body>
 <img src="../static/images/logo.png" width="419" th:src="@{images/logo.png}"/>
 <h1>Регистрация на ДельтаБуке</h1>
 <form action="#" th:action="@{/enter_reg}" th:object="${objectToFill}" method="post">
-<p>Login: <input type="text" th:field="*{login}" /></p>
-<p>Password: <input type="text" th:field="*{password}" /></p>
-<p>Name: <input type="text" th:field="*{firstName}" /></p>
-<p>SurnName: <input type="text" th:field="*{lastName}" /></p>
+<p>Login: </p>
+<input type="text" th:field="*{login}" />
+<p>Password:</p>
+<input type="text" th:field="*{password}" />
+<p>Name: </p>
+<input type="text" th:field="*{firstName}" />
+<p>SurnName: </p>
+<input type="text" th:field="*{lastName}" />
 <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 </form>
 </body>
