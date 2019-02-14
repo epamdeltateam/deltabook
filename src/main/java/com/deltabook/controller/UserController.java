@@ -62,14 +62,12 @@ public class UserController {
     @RequestMapping( value = "/user_panel")
     ModelAndView user_panel(Model model) {
         ModelAndView modelAndView =new ModelAndView();
-        //modelAndView.addObject("user_avatar", currentUser.getPicture());
         String image_string;
         image_string = Base64.getEncoder().encodeToString (currentUser.getPicture());
 
         modelAndView.addObject("image", image_string);
         modelAndView.setViewName("user_panel");
         return modelAndView;
-       // return "user_panel";
     }
     @RequestMapping( value = "/exit_user_panel")
     String exit_user_panel(Model model) {
