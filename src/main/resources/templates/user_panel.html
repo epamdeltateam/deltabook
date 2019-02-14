@@ -8,7 +8,6 @@
 <body>
 <img src="../static/images/logo.png" width="419" th:src="@{images/logo.png}"/>
 <h1>Пользовательская панель</h1>
-<!--<img alt="Avatar"  th:src="${user_avatar}" width="250" height="250"/> -->
 <img th:src="*{'data:image/png;base64,'+image}" alt="" />
 <p><a href="/upload_avatar">Загрузить аватарку</a></p>
 <p><a href="/add_user">Добавить пользователя в друзья</a></p>
