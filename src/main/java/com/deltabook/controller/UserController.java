@@ -66,6 +66,8 @@ public class UserController {
         image_string = Base64.getEncoder().encodeToString (currentUser.getPicture());
 
         modelAndView.addObject("image", image_string);
+        modelAndView.addObject("name", currentUser.getFirstName());
+        modelAndView.addObject("surname", currentUser.getLastName());
         modelAndView.setViewName("user_panel");
         return modelAndView;
     }

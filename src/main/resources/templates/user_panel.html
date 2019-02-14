@@ -8,10 +8,23 @@
 <body>
 <img src="../static/images/logo.png" width="419" th:src="@{images/logo.png}"/>
 <h1>Пользовательская панель</h1>
-<img th:src="*{'data:image/png;base64,'+image}" alt="" />
-<p><a href="/upload_avatar">Загрузить аватарку</a></p>
-<p><a href="/add_user">Добавить пользователя в друзья</a></p>
-<p><a href="/send_message">Отправить сообщение</a></p>
-<p><a href="/exit_user_panel">Выход</a></p>
+<p><a href="/upload_avatar">Загрузить аватарку</a>
+<a href="/add_user">Добавить пользователя в друзья</a>
+<a href="/send_message">Отправить сообщение</a>
+<a href="/exit_user_panel">Выход</a></p>
+<table style="font-family: Helvetica; font-size: 13px; color: #000000; ">
+    <tr>
+        <td rowspan="2">
+<img id="avatar" th:src="*{'data:image/png;base64,'+image}" alt="" />
+        </td>
+        <td valign="bottom">
+    Name: <span th:text="${name}"></span>
+        </td>
+    </tr>
+    <td  valign="top">
+     Surname:<span th:text="${surname}"></span>
+    </td>
+    </tr>
+</table>
 </body>
 </html>
