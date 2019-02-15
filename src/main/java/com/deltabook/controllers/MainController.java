@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
 import java.util.Base64;
 
 @Controller
@@ -45,6 +46,10 @@ public class MainController {
         }
         modelAndView.addObject("name", user.getFirstName());
         modelAndView.addObject("surname", user.getLastName());
+        switch(user.getRole()) {
+            case ROLE_USER: { modelAndView.addObject("role", false); break; }
+            case ROLE_ADMIN: { modelAndView.addObject("role", true); break; }
+        }
         modelAndView.setViewName("main");
         return modelAndView;
     }

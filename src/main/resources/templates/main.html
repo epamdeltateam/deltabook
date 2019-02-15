@@ -11,7 +11,12 @@
 <p><a href="/upload_avatar">Загрузить аватарку</a>
     <a href="/add_user">Добавить пользователя в друзья</a>
     <a href="/send_message">Отправить сообщение</a>
-    <a href="/logout">Выход</a></p>
+    <a href="/logout">Выход</a>
+    <div th:if="${role}">
+        <a href="/main_admin">Admin panel</a>
+    </div>
+</div>
+</p>
 <table style="font-family: Helvetica; font-size: 13px; color: #000000; ">
     <tr>
         <td rowspan="2">
