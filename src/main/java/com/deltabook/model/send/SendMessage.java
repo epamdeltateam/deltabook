@@ -1,4 +1,4 @@
-package com.deltabook.model;
+package com.deltabook.model.send;
 
 public class SendMessage {
     public String getBody() {

@@ -1,4 +1,4 @@
-package com.deltabook.security.datails;
+package com.deltabook.security.details;
 
 import com.deltabook.model.User;
 import org.springframework.security.core.GrantedAuthority;

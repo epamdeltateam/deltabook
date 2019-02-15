@@ -1,11 +1,12 @@
 package com.deltabook.controllers;
 
 import com.deltabook.model.*;
+import com.deltabook.model.send.SendFriendRequest;
+import com.deltabook.model.send.SendMessage;
 import com.deltabook.repositories.ContactRepository;
 import com.deltabook.repositories.MessageRepository;
 import com.deltabook.repositories.UserRepository;
-import com.deltabook.security.datails.UserDetailsImpl;
-import com.deltabook.services.UserService;
+import com.deltabook.security.details.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;

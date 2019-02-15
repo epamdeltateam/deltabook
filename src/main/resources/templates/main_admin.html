@@ -11,4 +11,18 @@
 <p><a href="/">User panel</a>
     <a href="/logout">Выход</a></p>
 </body>
+<h2>Смена фамилии у пользователя</h2>
+<form action="#" th:action="@{/change_user_last_name}" th:object="${SendChangeUser}" method="post">
+    <p>User NickName:</p>
+    <input type="text" th:field="*{NickName}" />
+    <p>New Last Name:</p>
+    <input type="text" th:field="*{NewLastName}" />
+    <p><input type="submit" value="Submit" />
+</form>
+<h2>Удаление пользователя</h2>
+<form action="#" th:action="@{/delete_user}" th:object="${SendChangeUser}" method="post">
+    <p>User NickName:</p>
+    <input type="text" th:field="*{NickName}" />
+    <p><input type="submit" value="Submit" />
+</form>
 </html>
