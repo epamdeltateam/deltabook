@@ -39,7 +39,10 @@ public class MainController {
         ModelAndView modelAndView = new ModelAndView();
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User user = principal.getUser();
-        System.out.println(user.getLogin());
+        if(user.isBlocked() == true || user.isDeleted() == true ) {
+            modelAndView.setViewName("login");
+            return modelAndView;
+        }
         String image_string;
         if (user.getPicture() != null){
             image_string = Base64.getEncoder().encodeToString(user.getPicture());

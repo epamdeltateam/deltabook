@@ -23,6 +23,7 @@
 <form action="#" th:action="@{/delete_user}" th:object="${SendChangeUser}" method="post">
     <p>User NickName:</p>
     <input type="text" th:field="*{NickName}" />
-    <p><input type="submit" value="Submit" />
+    <p><input type="submit" name="action" value="total_delete" /> >
+        <input type="submit" name="action" value="temp_delete" />
 </form>
 </html>
