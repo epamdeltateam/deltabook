@@ -6,6 +6,10 @@
     <title>User Panel</title>
 </head>
 <body>
+<th:block layout:fragment="script">
+    <script th:src="@{/js/CheckAndGetMessage.js}"></script>
+    </th:block>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <img src="../static/images/logo.png" width="419" th:src="@{images/logo.png}"/>
 <h1>Пользовательская панель</h1>
 <p><a href="/upload_avatar">Загрузить аватарку</a>
@@ -31,5 +35,6 @@
     </td>
     </tr>
 </table>
+<span id="MessageForCurrentUser"></span>
 </body>
 </html>
