@@ -22,6 +22,8 @@ public class MessageController {
     @Autowired
     MessageService messageService;
 
+    private Message old_message;
+
     @GetMapping("/send_message")
     String send_message(Model model) {
         model.addAttribute("recipient", new SendMessage());
@@ -33,7 +35,8 @@ public class MessageController {
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User userFrom = principal.getUser();
         Message message = messageService.sendMessage(userFrom, recipient);
-        return "main";
+        model.addAttribute("recipient", new SendMessage());
+        return "send_message";
     }
     @GetMapping(value = "/message_for_current_user", produces = {"text/html; charset-UTF-8"})
     public @ResponseBody
@@ -42,9 +45,21 @@ public class MessageController {
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User userRecipient = principal.getUser();
         Message message = messageService.findByRecipientIDOrderByCreatedAt(userRecipient);
-        if(message == null)
-            return "";
-        else
-            return "<p> New message is " + message.getBody() + "</p>" + "<p> Sender is " + message.getSenderID().getLogin() + "</p>" ;
+          if(old_message == null && message != null) {
+              old_message = message;
+              return "<p> New message is " + message.getBody() + "</p>" + "<p> Sender is " + message.getSenderID().getLogin() + "</p>";
+          }
+
+          if(old_message.getId() == message.getId())
+              return "";
+          else {
+              if(message != null)
+              old_message = message;
+              else
+                  return "";
+              return "<p> New message is " + message.getBody() + "</p>" + "<p> Sender is " + message.getSenderID().getLogin() + "</p>";
+          }
+
+
         }
     }
