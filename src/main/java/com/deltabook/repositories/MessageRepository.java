@@ -12,4 +12,6 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 
     List<Message> findByRecipientIDAndSenderIDOrderByCreatedAt(User senderId, User recipientId);
 
+    List<Message> findByRecipientIDOrderByCreatedAt(User recipientId);
+
 }

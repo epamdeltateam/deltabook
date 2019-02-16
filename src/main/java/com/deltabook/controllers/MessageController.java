@@ -10,14 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
 
 @Controller
 public class MessageController {
@@ -41,5 +35,16 @@ public class MessageController {
         Message message = messageService.sendMessage(userFrom, recipient);
         return "main";
     }
-
-}
+    @GetMapping(value = "/message_for_current_user", produces = {"text/html; charset-UTF-8"})
+    public @ResponseBody
+    String messageForCurrentUser(Authentication authentication) {
+        if(authentication == null) return "";
+        UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
+        User userRecipient = principal.getUser();
+        Message message = messageService.findByRecipientIDOrderByCreatedAt(userRecipient);
+        if(message == null)
+            return "";
+        else
+            return "<p> New message is " + message.getBody() + "</p>" + "<p> Sender is " + message.getSenderID().getLogin() + "</p>" ;
+        }
+    }
