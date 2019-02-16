@@ -36,9 +36,10 @@ public class MessageServiceImpl implements MessageService {
             System.out.println("Empty");
             return null;
         } else {
+            if (messageList.size() == 0)
+                return null;
             messageListSize = messageList.size();
             // System.out.println(messageListSize);
-            if (messageListSize == 0) return null;
             Message message;
             if (messageList.size() != 0)
                 message = messageList.get(messageListSize - 1);
