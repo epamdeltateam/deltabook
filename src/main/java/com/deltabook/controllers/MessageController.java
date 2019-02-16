@@ -50,16 +50,15 @@ public class MessageController {
               return "<p> New message is " + message.getBody() + "</p>" + "<p> Sender is " + message.getSenderID().getLogin() + "</p>";
           }
 
+        if(message == null)
+            return "";
+
           if(old_message.getId() == message.getId())
               return "";
           else {
-              if(message != null)
               old_message = message;
-              else
-                  return "";
               return "<p> New message is " + message.getBody() + "</p>" + "<p> Sender is " + message.getSenderID().getLogin() + "</p>";
           }
-
 
         }
     }
