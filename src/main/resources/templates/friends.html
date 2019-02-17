@@ -29,13 +29,6 @@
     <input type="submit" name="action" value="decline" />
     <input type="submit" name="action" value="accept" />
 </form>
-<h2>Перейти на страницу другого пользователя</h2>
-<form action="#" th:action="@{/proceed_friend_request}" th:object="${sendFriendRequest}" method="post">
-    <p>Friend NickName:</p>
-    <input type="text" th:field="*{friendNickname}" />
-    <input type="submit" name="action" value="decline" />
-    <input type="submit" name="action" value="accept" />
-</form>
 <h2>Пропущенные заявки в друзья</h2>
 <table border="1">
     <tr>
