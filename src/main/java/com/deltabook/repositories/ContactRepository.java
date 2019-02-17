@@ -16,6 +16,6 @@ public interface ContactRepository extends JpaRepository<Contact, Long> {
 
     Contact findByFriendFromIdAndFriendToId(User friendFromId, User friendToId);
 
-    Contact findFirstByFriendToIdOrderByCreatedAtDesc(User friendTo);
+    Contact findFirstByFriendToIdAndIsAcceptedFalseOrderByCreatedAtDesc(User friendTo);
 
 }

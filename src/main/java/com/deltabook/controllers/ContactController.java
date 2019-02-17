@@ -39,11 +39,11 @@ public class ContactController {
     @ResponseBody
     public SendFriendRequest getLastFriendRequest(Authentication authentication, @RequestParam("idOfPreviousContact") Long idOfPreviousContact){
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
-        User FriendTo = principal.getUser();
+        User friendTo = principal.getUser();
 
         System.out.println(idOfPreviousContact);
 
-        Contact contact = contactService.getLastRequest(FriendTo);
+        Contact contact = contactService.getLastNotAcceptedRequest(friendTo);
         if (contact == null || contact.getId().equals(idOfPreviousContact)){
             return null;
         }

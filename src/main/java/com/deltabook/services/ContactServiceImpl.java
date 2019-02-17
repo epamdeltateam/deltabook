@@ -47,7 +47,7 @@ public class ContactServiceImpl implements ContactService{
     }
 
     @Override
-    public Contact getLastRequest(User friendTo) {
-        return contactRepository.findFirstByFriendToIdOrderByCreatedAtDesc(friendTo);
+    public Contact getLastNotAcceptedRequest(User friendTo) {
+        return contactRepository.findFirstByFriendToIdAndIsAcceptedFalseOrderByCreatedAtDesc(friendTo);
     }
 }
