@@ -28,7 +28,7 @@ public class ContactServiceImpl implements ContactService{
     }
 
     public List<Contact> getAllRequestsToUser(User user) {
-        return contactRepository.findByIsAcceptedAndFriendToId(false, user);
+        return contactRepository.findByIsAcceptedAndFriendToId(false,user);
     }
 
     public List<Contact> getAllFriends(User user) {

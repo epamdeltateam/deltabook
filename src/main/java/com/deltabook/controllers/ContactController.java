@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 public class ContactController {
 
@@ -22,12 +24,18 @@ public class ContactController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/send_request")
-    String sendRequest(Model model) {
+    @GetMapping("/friends")
+    String sendRequest(Authentication authentication, Model model) {
         model.addAttribute("sendFriendRequest", new SendFriendRequest());
-        return "send_request";
+        UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
+        User userTo = principal.getUser();
+        List<Contact> contactListTo = contactService.getAllRequestsToUser(userTo);
+        model.addAttribute("contactReceivedList", contactListTo);
+        List<Contact> contactListFrom = contactService.getAllRequestsFromUser(userTo);
+        model.addAttribute("contactSentList", contactListFrom);
+        return "friends";
     }
-    @PostMapping("/send_request")
+    @PostMapping("/send_friend_request")
     String sendRequest(Authentication authentication, Model model, @ModelAttribute SendFriendRequest send_req) {
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User userFrom = principal.getUser();

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
+    <link href="../static/css/friends.css" th:href="@{/css/friends.css}" rel="stylesheet" />
+    <title>Add user</title>
+</head>
+<body>
+<img src="../static/images/logo.png" width="419" th:src="@{images/logo.png}"/>
+<h2>Добавление в друзья</h2>
+<a href="/">Назад в панель пользователя</a>
+<form action="#" th:action="@{/send_friend_request}" th:object="${sendFriendRequest}" method="post">
+    <p>Friend NickName:</p>
+    <input type="text" th:field="*{friendNickname}" />
+    <p>Request Message:</p>
+    <input type="text" th:field="*{requestMessage}" />
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
+<h2>Подтверждение отклонение/добавления в друзья</h2>
+<form action="#" th:action="@{/proceed_friend_request}" th:object="${sendFriendRequest}" method="post">
+    <p>Friend NickName:</p>
+    <input type="text" th:field="*{friendNickname}" />
+    <input type="submit" name="action" value="decline" />
+    <input type="submit" name="action" value="accept" />
+</form>
+<h2>Пропущенные заявки в друзья</h2>
+<table border="1">
+    <tr>
+        <th>Contact id</th>
+        <th>friend Nickname</th>
+        <th>createdAt</th>
+        <th>requestMessage</th>
+    </tr>
+    <tr th:each="contact : ${contactReceivedList}">
+        <td th:text="${contact?.id}">id</td>
+        <td th:text="${contact?.friendFromId.login}">friend Nickname</td>
+        <td th:text="${contact?.createdAt}">createdAt</td>
+        <td th:text="${contact?.requestMessage}">requestMessage</td>
+    </tr>
+</table>
+<h2>Исходящие заявки в друзья</h2>
+<table border="1">
+    <tr>
+        <th>Contact id</th>
+        <th>friend Nickname</th>
+        <th>createdAt</th>
+        <th>requestMessage</th>
+    </tr>
+    <tr th:each="contact : ${contactSentList}">
+        <td th:text="${contact?.id}">id</td>
+        <td th:text="${contact?.friendToId.login}">friend Nickname</td>
+        <td th:text="${contact?.createdAt}">createdAt</td>
+        <td th:text="${contact?.requestMessage}">requestMessage</td>
+    </tr>
+</table>
+</body>
+</html>
