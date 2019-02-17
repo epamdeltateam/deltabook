@@ -1,6 +1,7 @@
 package com.deltabook.controllers;
 
 
+import com.deltabook.model.Contact;
 import com.deltabook.model.User;
 import com.deltabook.model.send.SendFriendRequest;
 import com.deltabook.security.details.UserDetailsImpl;
@@ -33,5 +34,19 @@ public class ContactController {
         User userTo = userService.getUserByLogin(send_req.getFriendNickname());
         contactService.sendRequestFriend(userFrom, userTo,send_req.getRequestMessage() );
         return "main";
+    }
+    @RequestMapping(value = "/get_last_friend_request",method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public SendFriendRequest getLastFriendRequest(Authentication authentication, @RequestParam("idOfPreviousContact") Long idOfPreviousContact){
+        UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
+        User FriendTo = principal.getUser();
+
+        System.out.println(idOfPreviousContact);
+
+        Contact contact = contactService.getLastRequest(FriendTo);
+        if (contact == null || contact.getId().equals(idOfPreviousContact)){
+            return null;
+        }
+        return new SendFriendRequest(contact);
     }
 }

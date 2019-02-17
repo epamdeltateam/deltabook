@@ -1,6 +1,7 @@
 package com.deltabook.model;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "contacts")
@@ -13,6 +14,7 @@ public class Contact {
         this.friendToId = friendToId;
         this.requestMessage = requestMessage;
         this.isAccepted = false;
+        this.createdAt = new Timestamp(System.currentTimeMillis());
     }
 
     public Contact(User friendFromId, User friendToId) {
@@ -30,6 +32,8 @@ public class Contact {
     @JoinColumn(name = "friendToId")
     private User friendToId;
     private boolean isAccepted;
+
+    private Timestamp createdAt;
     @Lob
     private String requestMessage;
 
@@ -71,6 +75,14 @@ public class Contact {
 
     public void setRequestMessage(String requestMessage) {
         this.requestMessage = requestMessage;
+    }
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
     }
 
 }

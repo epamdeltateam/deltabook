@@ -69,3 +69,42 @@ a:hover, a:active {
     from {opacity: 0;}
     to {opacity:1 ;}
 }
+
+.friend_popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* The actual popup (appears on top) */
+.friend_popup .friendpopuptext {
+    width: 160px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: fixed;
+    z-index: 1;
+    bottom: 140px;
+    left: 1%;
+    display: none;
+}
+
+/* Toggle this class when clicking on the popup container (hide and show the popup) */
+.friend_popup .show {
+    display: block;
+    -webkit-animation: fadeInFriendPopup 1s;
+    animation: fadeInFriendPopup 1s
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeInFriendPopup {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes fadeInFriendPopup {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+}

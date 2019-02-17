@@ -12,4 +12,5 @@ public interface ContactService {
     List<Contact> getAllFriends(User user);
     void confirmRequest(User fromUser, User toUser);
     void declineRequest(User fromUser, User toUser);
+    Contact getLastRequest(User friendTo);
 }

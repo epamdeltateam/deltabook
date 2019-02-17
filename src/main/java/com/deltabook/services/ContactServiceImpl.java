@@ -45,4 +45,9 @@ public class ContactServiceImpl implements ContactService{
         Contact contact = contactRepository.findByFriendFromIdAndFriendToId(fromUser, toUser);
         contactRepository.delete(contact);
     }
+
+    @Override
+    public Contact getLastRequest(User friendTo) {
+        return contactRepository.findFirstByFriendToIdOrderByCreatedAtDesc(friendTo);
+    }
 }
