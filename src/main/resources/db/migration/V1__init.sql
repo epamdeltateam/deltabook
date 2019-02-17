@@ -23,6 +23,5 @@ CREATE TABLE contacts (
 	friend_from_id bigint references users(id),
 	friend_to_id bigint references users(id),
 	is_Accepted boolean,
-	request_Message clob,
-	created_at timestamp
+	request_Message clob
 );
