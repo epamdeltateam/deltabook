@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
+    <title>User Page</title>
+</head>
+<body>
+<img src="../static/images/logo.png" width="419" th:src="@{images/logo.png}"/>
+<h1>Личная страница пользователя</h1>
+<a href="/">Назад в панель пользователя</a>
+
+<table style="font-family: Helvetica; font-size: 13px; color: #000000; ">
+    <tr>
+        <td rowspan="2">
+            <img id="avatar" th:src="*{'data:image/png;base64,'+image}" alt="" />
+        </td>
+        <td valign="bottom">
+            Name: <span th:text="${name} + ' ' + ${surname} "></span>
+        </td>
+    </tr>
+    <td  valign="top">
+        Nickname: <span th:text="${nickname}"></span>
+    </td>
+</table>
+</body>
+</html>
