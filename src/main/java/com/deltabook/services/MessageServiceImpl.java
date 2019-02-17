@@ -26,7 +26,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Message getLastMessage(User recipientId) {
-        return messageRepository.findFirstByRecipientIDOrderByCreatedAtDesc(recipientId);
+    public Message getLastUnreadMessage(User recipientId) {
+        return messageRepository.findFirstByRecipientIDAndIsReadFalseOrderByCreatedAtDesc(recipientId);
     }
 }

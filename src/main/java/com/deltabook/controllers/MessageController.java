@@ -42,7 +42,7 @@ public class MessageController {
     public SendMessage getLastMessage(Authentication authentication, @RequestParam("idOfPreviousMessage") Long idOfPreviousMessage){
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User userRecipient = principal.getUser();
-        Message message = messageService.getLastMessage(userRecipient);
+        Message message = messageService.getLastUnreadMessage(userRecipient);
         if (message == null || message.getId().equals(idOfPreviousMessage)){
             return null;
         }
