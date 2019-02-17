@@ -2,6 +2,7 @@ package com.deltabook.services;
 
 import com.deltabook.model.Contact;
 import com.deltabook.model.User;
+import com.deltabook.model.send.SendFriendRequest;
 import com.deltabook.repositories.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,5 +50,14 @@ public class ContactServiceImpl implements ContactService{
     @Override
     public Contact getLastNotAcceptedRequest(User friendTo) {
         return contactRepository.findFirstByFriendToIdAndIsAcceptedFalseOrderByCreatedAtDesc(friendTo);
+    }
+
+    @Override
+    public void proceedFriendRequest(User fromUser, User toUser, String action) {
+        if(action.equals("decline"))
+            declineRequest(fromUser, toUser);
+        if(action.equals("accept"))
+            confirmRequest(fromUser, toUser);
+        return;
     }
 }

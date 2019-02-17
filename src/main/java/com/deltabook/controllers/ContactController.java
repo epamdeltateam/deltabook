@@ -49,4 +49,12 @@ public class ContactController {
         }
         return new SendFriendRequest(contact);
     }
+    @PostMapping("/proceed_friend_request")
+    String proccedRequest(Authentication authentication, Model model, @ModelAttribute SendFriendRequest send_req, @RequestParam(value="action", required=true) String action) {
+        UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
+        User userTo = principal.getUser();
+        User userFrom = userService.getUserByLogin(send_req.getFriendNickname());
+        contactService.proceedFriendRequest(userFrom, userTo, action);
+        return "main";
+    }
 }

@@ -7,7 +7,7 @@
 </head>
 <body>
 <img src="../static/images/logo.png" width="419" th:src="@{images/logo.png}"/>
-<h1>Добавление в друзья</h1>
+<h2>Добавление в друзья</h2>
 <a href="/">Назад в панель пользователя</a>
 <form action="#" th:action="@{/send_request}" th:object="${sendFriendRequest}" method="post">
     <p>Friend NickName:</p>
@@ -15,6 +15,13 @@
     <p>Request Message:</p>
     <input type="text" th:field="*{requestMessage}" />
     <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
+<h2>Подтверждение отклонение/добавления в друзья</h2>
+<form action="#" th:action="@{/proceed_friend_request}" th:object="${sendFriendRequest}" method="post">
+    <p>Friend NickName:</p>
+    <input type="text" th:field="*{friendNickname}" />
+    <input type="submit" name="action" value="decline" />
+    <input type="submit" name="action" value="accept" />
 </form>
 </body>
 </html>
