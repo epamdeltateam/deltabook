@@ -8,6 +8,6 @@ public interface MessageService {
 
     Message sendMessage(User userFrom, SendMessage sendMessage);
 
-    Message getLastMessage(User recipientId);
+    Message getLastUnreadMessage(User recipientId);
 
 }

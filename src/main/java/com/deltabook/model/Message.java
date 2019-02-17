@@ -6,14 +6,16 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "messages")
 public class Message {
-    public Message() {}
 
-    public Message(User senderID, User recipientID, String body ) {
+    public Message() {
+    }
+
+    public Message(User senderID, User recipientID, String body) {
         this.senderID = senderID;
-        this.recipientID=recipientID;
-        this.body=body;
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        this.createdAt = timestamp;
+        this.recipientID = recipientID;
+        this.body = body;
+        this.createdAt = new Timestamp(System.currentTimeMillis());
+        this.isRead = false;
     }
 
     @Id
@@ -23,12 +25,24 @@ public class Message {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sender_ID")
     private User senderID;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "recipient_ID")
     private User recipientID;
+
     @Lob
     private String body;
     private Timestamp createdAt;
+    private boolean isRead;
+
+    public boolean isRead() {
+        return isRead;
+    }
+
+    public void setRead(boolean read) {
+        isRead = read;
+    }
+
     public Long getId() {
         return id;
     }

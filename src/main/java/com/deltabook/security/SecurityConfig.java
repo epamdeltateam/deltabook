@@ -24,16 +24,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/css/**", "/images/**", "/h2_console/*").permitAll()
-                    .antMatchers("/login", "/registration").anonymous()
-                    .antMatchers("/main","/","/send_message","/friends","/upload_avatar","/get_last_message*", "/get_last_friend_request*").authenticated()
-                    .antMatchers("/main_admin").hasRole("ADMIN")
-                    .and()
+                .antMatchers("/css/**", "/images/**", "/h2_console/*").permitAll()
+                .antMatchers("/login", "/registration").anonymous()
+                .antMatchers("/main","/","/send_message","/friends","/upload_avatar","/get_last_message*", "/get_last_friend_request*", "/send_friend_request", "/proceed_friend_request").authenticated()
+                .antMatchers("/main_admin", "/delete_user*", "/change_user_last_name*").hasRole("ADMIN")
+                .and()
                 .formLogin()
-                    .usernameParameter("login")
-                    .loginPage("/login")
-                    .defaultSuccessUrl("/")
-                    .and()
+                .usernameParameter("login")
+                .loginPage("/login")
+                .defaultSuccessUrl("/")
+                .and()
                 .logout()
                 .logoutSuccessUrl("/login?logout");
 
