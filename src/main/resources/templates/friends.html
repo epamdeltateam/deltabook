@@ -39,7 +39,7 @@
     </tr>
     <tr th:each="contact : ${contactReceivedList}">
         <td th:text="${contact?.id}">id</td>
-        <td><a th:href="${contact?.friendFromId.login}" th:text="${contact?.friendToId.login}" target="_blank" /></td>
+        <td><a th:href="${contact?.friendFromId.login}" th:text="${contact?.friendFromId.login}" target="_blank" /></td>
         <td th:text="${contact?.createdAt}">createdAt</td>
         <td th:text="${contact?.requestMessage}">requestMessage</td>
     </tr>
