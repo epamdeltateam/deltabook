@@ -47,7 +47,7 @@
         <th>createdAt</th>
         <th>requestMessage</th>
     </tr>
-    <tr th:each="contact : ${contactSentList}" th:onclick="">
+    <tr th:each="contact : ${contactSentList}">
         <td th:text="${contact?.id}">id</td>
         <td><a th:href="${contact?.friendToId.login}" th:text="${contact?.friendToId.login}" target="_blank" /></td>
         <td th:text="${contact?.createdAt}">createdAt</td>
