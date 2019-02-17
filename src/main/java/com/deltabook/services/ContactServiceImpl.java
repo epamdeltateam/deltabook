@@ -2,7 +2,6 @@ package com.deltabook.services;
 
 import com.deltabook.model.Contact;
 import com.deltabook.model.User;
-import com.deltabook.model.send.SendFriendRequest;
 import com.deltabook.repositories.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
