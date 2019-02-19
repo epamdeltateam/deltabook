@@ -32,7 +32,10 @@ public class MainController {
         if (user.getPicture() != null){
             image_string = Base64.getEncoder().encodeToString(user.getPicture());
             modelAndView.addObject("image", image_string);
+            modelAndView.addObject("hasImage", true);
         }
+        else
+            modelAndView.addObject("hasImage", false);
         modelAndView.addObject("name", user.getFirstName());
         modelAndView.addObject("surname", user.getLastName());
         switch(user.getRole()) {

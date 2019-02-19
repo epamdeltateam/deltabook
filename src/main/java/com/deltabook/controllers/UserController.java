@@ -48,10 +48,13 @@ public class UserController {
         model.addObject("nickname", nickname);
         User user = userService.getUserByLogin(nickname);
         String image_string;
-        if (user.getPicture() != null) {
+        if (user.getPicture() != null){
             image_string = Base64.getEncoder().encodeToString(user.getPicture());
             model.addObject("image", image_string);
+            model.addObject("hasImage", true);
         }
+        else
+            model.addObject("hasImage", false);
         model.addObject("nickname", user.getLogin());
 
         model.addObject("name", user.getFirstName());

@@ -26,7 +26,12 @@
 <table style="font-family: Helvetica; font-size: 13px; color: #000000; ">
     <tr>
         <td rowspan="2">
+            <div th:if="${hasImage}">
             <img id="avatar" th:src="*{'data:image/png;base64,'+image}" alt="" />
+            </div>
+            <div th:unless="${hasImage}">
+                <img id="default_avatar" th:src="@{/images/default-avatar.jpg}" alt="" />
+            </div>
         </td>
         <td valign="bottom">
             Name: <span th:text="${name}"></span>
