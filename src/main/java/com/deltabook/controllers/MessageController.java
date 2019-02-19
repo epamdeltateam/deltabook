@@ -71,7 +71,7 @@ public class MessageController {
     }
 
     @RequestMapping(value = "/dialog/{recipient}/{sender}")
-    public String generateUserPsge(@PathVariable String recipient, @PathVariable String sender, Model model) {
+    public String generateDialog(@PathVariable String recipient, @PathVariable String sender, Model model) {
         List<Message> messageList = new ArrayList<Message>();
         User userRecipient = userService.getUserByLogin(recipient);
         User userSender = userService.getUserByLogin(sender);
