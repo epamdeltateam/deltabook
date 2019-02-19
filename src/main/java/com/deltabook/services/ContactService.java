@@ -10,7 +10,8 @@ public interface ContactService {
     String sendRequestFriend(User fromUser, User toUser, String requestMessage);
     List<Contact> getAllRequestsFromUser(User user);
     List<Contact> getAllRequestsToUser(User user);
-    List<Contact> getAllFriends(User user);
+    List<Contact> getFriendsTo(User user);
+    List<Contact> getFriendsFrom(User user);
     void confirmRequest(User fromUser, User toUser);
     void declineRequest(User fromUser, User toUser);
     Contact getLastNotAcceptedRequest(User friendTo);
