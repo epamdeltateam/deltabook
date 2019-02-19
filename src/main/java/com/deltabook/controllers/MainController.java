@@ -22,7 +22,7 @@ import java.util.Base64;
 @Controller
 public class MainController {
 
-    @RequestMapping(value={"/","/main"})
+    @RequestMapping(value="/")
     public ModelAndView mainPage(Authentication authentication, Model model) {
         model.addAttribute("objectToFill_auth", new User());
         ModelAndView modelAndView = new ModelAndView();
