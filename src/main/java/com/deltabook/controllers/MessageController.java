@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,5 +69,15 @@ public class MessageController {
         }
         model.addAttribute("dialogsList", dialogsList);
         return "dialogs";
+    }
+
+    @RequestMapping(value = "/dialog/{recipient}/{sender}")
+    public String generateUserPsge(@PathVariable String recipient, @PathVariable String sender, Model model) {
+        List<Message> messageList = new ArrayList<Message>();
+        User userRecipient = userService.getUserByLogin(recipient);
+        User userSender = userService.getUserByLogin(sender);
+        messageList = messageService.getDialog(userRecipient,userSender );
+        model.addAttribute("messageList", messageList);
+        return "dialog_between_users";
     }
 }

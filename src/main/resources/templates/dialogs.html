@@ -12,15 +12,11 @@
 <a href="/">Назад в панель пользователя</a>
 <table cellspacing="0" cellpadding="0">
     <span th:each="dialogsList : ${dialogsList}">
-        <span th:each="message : ${dialogsList}">
+        <span th:each="message,messageStat: ${dialogsList}" th:if="${messageStat.index == 0}" >
     <tr>
-         <td><a class="user_link" th:href="${message?.senderID.login}" th:text="${message?.senderID.firstName} + ' ' + ${message?.senderID.lastName}" target="_blank" /></td>
+         <td><a class="user_link" th:href="'dialog' + '/' + ${message?.senderID.login} + '/' +  ${message?.recipientID.login}" th:text="'Dialog with' + ' ' + ${message?.senderID.login} + ' ' + 'and' + ' ' + ${message?.recipientID.login}"/></td>
     </tr>
-            <tr>
-                        <td th:text="${message?.body}">Body</td>
-            </tr>
         </span>
-        <td colspan=3>&nbsp;</td>
     </span>
 </table>
 </body>
