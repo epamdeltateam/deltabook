@@ -5,13 +5,13 @@ import com.deltabook.model.User;
 import com.deltabook.model.send.SendMessage;
 import com.deltabook.repositories.MessageRepository;
 import com.deltabook.repositories.UserRepository;
+import com.deltabook.security.details.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -51,6 +51,39 @@ public class MessageServiceImpl implements MessageService {
         }
 
         return new ArrayList<>(setOfUsers);
+    }
+
+    @Override
+    public Model generatedDialogBetweenUsers(String recipient, String sender, Authentication authentication, Model model) {
+        List<Message> messageList = new ArrayList<Message>();
+        UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
+        User userRecipient = userRepository.findUserByLogin(recipient);
+        User userSender = userRepository.findUserByLogin(sender);
+        messageList = getDialog(userRecipient,userSender );
+        String recipientLogin = userRecipient.getLogin();
+        String senderLogin = userSender.getLogin();
+        if(recipientLogin != principal.getUser().getLogin()) {
+            if(senderLogin == principal.getUser().getLogin()) {
+                String temp = recipientLogin;
+                recipientLogin = senderLogin;
+                senderLogin = temp;
+
+            }
+        }
+        model.addAttribute("messageList", messageList);
+        model.addAttribute("recipientLogin", recipientLogin);
+        model.addAttribute("senderLogin", senderLogin);
+        String recipientPic = "", senderPic = " ";
+        if (userRecipient.getPicture() != null){
+            recipientPic = Base64.getEncoder().encodeToString(userRecipient.getPicture());
+        }
+        if (userSender.getPicture() != null){
+            senderPic = Base64.getEncoder().encodeToString(userSender.getPicture());
+        }
+        model.addAttribute("recipientPic", recipientPic);
+        model.addAttribute("senderPic", senderPic);
+        model.addAttribute("sendMessage", new SendMessage());
+        return model;
     }
 
 }

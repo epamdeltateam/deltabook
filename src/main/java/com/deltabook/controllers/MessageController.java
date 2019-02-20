@@ -73,35 +73,8 @@ public class MessageController {
     }
 
     @RequestMapping(value = "dialog/{recipient}/{sender}", method=RequestMethod.GET)
-    public String generateDialog(@PathVariable String recipient, @PathVariable String sender, Model model, Authentication authentication) {
-        List<Message> messageList = new ArrayList<Message>();
-        UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
-        User userRecipient = userService.getUserByLogin(recipient);
-        User userSender = userService.getUserByLogin(sender);
-        messageList = messageService.getDialog(userRecipient,userSender );
-        String recipientLogin = userRecipient.getLogin();
-        String senderLogin = userSender.getLogin();
-        if(recipientLogin != principal.getUser().getLogin()) {
-            if(senderLogin == principal.getUser().getLogin()) {
-                String temp = recipientLogin;
-                recipientLogin = senderLogin;
-                senderLogin = temp;
-
-            }
-        }
-        model.addAttribute("messageList", messageList);
-        model.addAttribute("recipientLogin", recipientLogin);
-        model.addAttribute("senderLogin", senderLogin);
-        String recipientPic = "", senderPic = " ";
-        if (userRecipient.getPicture() != null){
-            recipientPic = Base64.getEncoder().encodeToString(userRecipient.getPicture());
-        }
-        if (userSender.getPicture() != null){
-            senderPic = Base64.getEncoder().encodeToString(userSender.getPicture());
-        }
-        model.addAttribute("recipientPic", recipientPic);
-        model.addAttribute("senderPic", senderPic);
-        model.addAttribute("sendMessage", new SendMessage());
+    public String generateDialog(@PathVariable String recipient, @PathVariable String sender, Authentication authentication, Model model) {
+        Model model_generated = messageService.generatedDialogBetweenUsers( recipient, sender,authentication, model);
         return "dialog_between_users";
     }
 
