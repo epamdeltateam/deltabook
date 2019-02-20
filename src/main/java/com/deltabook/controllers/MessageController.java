@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 
@@ -76,7 +77,20 @@ public class MessageController {
         User userRecipient = userService.getUserByLogin(recipient);
         User userSender = userService.getUserByLogin(sender);
         messageList = messageService.getDialog(userRecipient,userSender );
+        String recipientLogin = userRecipient.getLogin();
+        String senderLogin = userSender.getLogin();
         model.addAttribute("messageList", messageList);
+        model.addAttribute("recipientLogin", recipientLogin);
+        model.addAttribute("senderLogin", senderLogin);
+        String recipientPic = "", senderPic = " ";
+        if (userRecipient.getPicture() != null){
+            recipientPic = Base64.getEncoder().encodeToString(userRecipient.getPicture());
+        }
+        if (userSender.getPicture() != null){
+            senderPic = Base64.getEncoder().encodeToString(userSender.getPicture());
+        }
+        model.addAttribute("recipientPic", recipientPic);
+        model.addAttribute("senderPic", senderPic);
         return "dialog_between_users";
     }
 }

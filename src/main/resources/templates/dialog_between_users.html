@@ -11,9 +11,22 @@
 <h2>Диалог с пользователем</h2>
 <a href="/dialogs">Назад к диалогам </a>
 <table cellspacing="0" cellpadding="0">
-        <span th:each="message : ${messageList}">
+        <span th:each="message, messageStat : ${messageList}">
     <tr>
-         <td><a class="user_link" th:href="${message?.senderID.login}" th:text="${message?.senderID.firstName} + ' ' + ${message?.senderID.lastName}" /></td>
+            <tr>
+                 <td>
+            <div th:if="${message?.senderID.picture} == null">
+            <img class="very_reduced_avatar" th:src="@{/images/default-avatar.jpg}" alt="" />
+            </div>
+            <div th:unless="${message?.senderID.picture} == null">
+                <div th:if="${message?.senderID.login} == ${senderLogin}">
+           <img class="very_reduced_avatar" th:src="*{'data:image/png;base64,'+senderPic}" alt="" />
+                </div>
+                <div th:if="${message?.senderID.login} == ${recipientLogin}">
+           <img class="very_reduced_avatar" th:src="*{'data:image/png;base64,'+recipientPic}" alt="" />
+                </div>
+            </div>
+         <a class="user_link" th:href="${message?.senderID.login}" th:text="${message?.senderID.firstName} + ' ' + ${message?.senderID.lastName}" /></td>
     </tr>
             <tr>
                         <td th:text="${message?.body}">Body</td>

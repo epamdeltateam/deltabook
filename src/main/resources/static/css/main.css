@@ -110,10 +110,3 @@ a:hover:not(.user_link), a:active:not(.user_link) {
 }
 
 table {border: none;}
-
-.reduced_avatar {
-    height: auto;
-    width: auto;
-    max-width: 90px;
-    max-height: 90px;
-}

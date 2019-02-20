@@ -14,3 +14,16 @@ th {
     background-color: #4CAF50;
     color: white;
 }
+
+.reduced_avatar {
+    height: auto;
+    width: auto;
+    max-width: 90px;
+    max-height: 90px;
+}
+.very_reduced_avatar {
+    height: auto;
+    width: auto;
+    max-width: 45px;
+    max-height: 45px;
+}
