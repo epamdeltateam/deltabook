@@ -90,7 +90,7 @@ public class MessageController {
             }
         }
         model.addAttribute("messageList", messageList);
-        model.addAttribute("recipientLogin", userRecipient);
+        model.addAttribute("recipientLogin", recipientLogin);
         model.addAttribute("senderLogin", senderLogin);
         String recipientPic = "", senderPic = " ";
         if (userRecipient.getPicture() != null){
