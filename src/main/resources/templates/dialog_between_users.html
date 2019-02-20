@@ -35,7 +35,7 @@
     </span>
 </table>
 <form action="#" th:action="@{/send_message_in_dialog}" th:object="${sendMessage}" method="post">
-    <div class = "form"><input class="form-control input-lg" type="hidden" th:value="${recipientLogin}" id="nickName" name="nickName"/>
+    <div class = "form"><input class="form-control input-lg" type="hidden" th:value="${senderLogin}" id="nickName" name="nickName"/>
         <input class="form-control input-lg" type="text" th:field="*{body}" placeholder="Сообщение"/></div>
     <p><input class="btn btn-warning" type="submit"  value="Отправить" />
 </form>
