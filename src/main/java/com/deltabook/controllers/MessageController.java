@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.Base64;
@@ -71,7 +72,7 @@ public class MessageController {
         return "dialogs";
     }
 
-    @RequestMapping(value = "/dialog/{recipient}/{sender}")
+    @RequestMapping(value = "dialog/{recipient}/{sender}", method=RequestMethod.GET)
     public String generateDialog(@PathVariable String recipient, @PathVariable String sender, Model model) {
         List<Message> messageList = new ArrayList<Message>();
         User userRecipient = userService.getUserByLogin(recipient);
@@ -91,6 +92,21 @@ public class MessageController {
         }
         model.addAttribute("recipientPic", recipientPic);
         model.addAttribute("senderPic", senderPic);
+        model.addAttribute("sendMessage", new SendMessage());
         return "dialog_between_users";
+    }
+
+    @PostMapping("/send_message_in_dialog")
+    ModelAndView sendMessageInDialog(Authentication authentication, @ModelAttribute SendMessage recipient) {
+        UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
+        User userFrom = principal.getUser();
+        Message message = messageService.sendMessage(userFrom, recipient);
+        String url = "redirect:/dialog/";
+        url += recipient.getNickName();
+        url += "/";
+        url += userFrom.getLogin();
+        ModelAndView modelAndView = new ModelAndView(url);
+        modelAndView.addObject("sendMessage", new SendMessage());
+        return modelAndView;
     }
 }

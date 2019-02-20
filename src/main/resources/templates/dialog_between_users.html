@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
@@ -34,5 +34,10 @@
         </span>
     </span>
 </table>
+<form action="#" th:action="@{/send_message_in_dialog}" th:object="${sendMessage}" method="post">
+    <div class = "form"><input class="form-control input-lg" type="hidden" th:value="${recipientLogin}" id="nickName" name="nickName"/>
+        <input class="form-control input-lg" type="text" th:field="*{body}" placeholder="Сообщение"/></div>
+    <p><input class="btn btn-warning" type="submit"  value="Отправить" />
+</form>
 </body>
 </html>
