@@ -20,4 +20,6 @@ public interface MessageService {
 
     Model generatedDialogBetweenUsers(String recipient, String sender, Authentication authentication, Model model);
 
+    List<Message>  UpdatedDialogBetweenUsers(String recipient, String sender, Authentication authentication, Model model);
+
 }

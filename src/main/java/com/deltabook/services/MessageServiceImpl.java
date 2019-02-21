@@ -85,5 +85,13 @@ public class MessageServiceImpl implements MessageService {
         model.addAttribute("sendMessage", new SendMessage());
         return model;
     }
+    public List<Message>  UpdatedDialogBetweenUsers(String recipient, String sender, Authentication authentication, Model model) {
+        List<Message> messageList = new ArrayList<Message>();
+        UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
+        User userRecipient = userRepository.findUserByLogin(recipient);
+        User userSender = userRepository.findUserByLogin(sender);
+        messageList = getDialog(userRecipient,userSender );
+        return messageList;
+    }
 
 }

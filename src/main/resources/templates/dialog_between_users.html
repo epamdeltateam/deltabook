@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
@@ -7,34 +7,91 @@
     <title>User Dialog</title>
 </head>
 <body>
+<script type="text/javascript" th:inline="javascript">
+    var senderLogin = [[${senderLogin}]]
+    var recipientLogin = [[${recipientLogin}]]
+    function CheckAndGetMessage() {
+        $.ajax({
+            type : "GET",
+            url: '/get_updated_dialog',
+            data: {'senderLogin':senderLogin, 'recipientLogin':recipientLogin },
+            dataType : 'json',
+            success: function (messageList) {
+                function json2table(json, classes) {
+                    var cols = Object.keys(json[0]);
+
+                    var headerRow = '';
+                    var bodyRows = '';
+
+                    classes = classes || '';
+
+                    function capitalizeFirstLetter(string) {
+                        return string.charAt(0).toUpperCase() + string.slice(1);
+                    }
+
+                    cols.map(function(col) {
+                        headerRow += '<th>' + capitalizeFirstLetter(col) + '</th>';
+                    });
+
+                    json.map(function(row) {
+
+                        cols.map(function(colName) {
+                            if(colName == 'id') return;
+                            if(colName == 'timestamp') return;
+                            if(colName == 'body') {bodyRows += '<tr>' + '<td>'+ row[colName] + '</td>' + '</tr>' ; return;}
+                            if(colName == 'nickName') {
+                                bodyRows += '<tr>' + '<td>'+ '<a class="user_link" href=/' + row[colName] +'>' + row[colName] + '</a>' + '</td>' + '</tr>' ;
+                                return;
+                            }
+                            if(colName == 'picture') {
+                                bodyRows += '<tr>' + '<td>'+ '<img class="very_reduced_avatar" src="data:image/png;base64,' + row[colName] + '" alt="" />' + '</td>' + '</tr>' ;
+                                return;
+                            }
+                        })
+
+                    });
+
+                    return '<table class="' +
+                        classes +
+                        '"><thead><tr>' +
+                        '</tr></thead><tbody>' +
+                        bodyRows +
+                        '</tbody></table>';
+                }
+
+                document.getElementById('messageTable').innerHTML = json2table(messageList, 'table');
+
+                var dom = {
+                    data: document.getElementById('data'),
+                    table: document.getElementById('messageTable'),
+                };
+
+                dom.data.value = JSON.stringify(messageList);
+                dom.data.addEventListener('input', function() {
+                    dom.table.innerHTML = json2table(JSON.parse(messageList), 'table');
+                });
+                return;
+            },
+            error: function(){
+                return;
+            }
+
+        });
+    };
+
+    setInterval(CheckAndGetMessage,1000);
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <img src="../static/images/logo.png" width="419" th:src="@{/images/logo.png}"/>
 <h2>Диалог с пользователем</h2>
 <a href="/dialogs">Назад к диалогам </a>
-<table cellspacing="0" cellpadding="0">
-        <span th:each="message : ${messageList}">
-    <tr>
-            <tr>
-                 <td>
-            <div th:if="${message?.senderID.picture} == null">
-            <img class="very_reduced_avatar" th:src="@{/images/default-avatar.jpg}" alt="" />
-            </div>
-            <div th:unless="${message?.senderID.picture} == null">
-                <div th:if="${message?.senderID.login} == ${senderLogin}">
-           <img class="very_reduced_avatar" th:src="*{'data:image/png;base64,'+senderPic}" alt="" />
-                </div>
-                <div th:if="${message?.senderID.login} == ${recipientLogin}">
-           <img class="very_reduced_avatar" th:src="*{'data:image/png;base64,'+recipientPic}" alt="" />
-                </div>
-            </div>
-         <a class="user_link" th:href="'/'+${message?.senderID.login}" th:text="${message?.senderID.firstName} + ' ' + ${message?.senderID.lastName}" /></td>
-    </tr>
-            <tr>
-                        <td th:text="${message?.body}">Body</td>
-            </tr>
-        </span>
-    </span>
-</table>
-<form action="#" th:action="@{/send_message_in_dialog}" th:object="${sendMessage}" method="post">
+<div class="container">
+<div class="row">
+    <div id="messageTable" class="col-md-6">
+    </div>
+</div>
+</div>
+<form id="send_message_in_dialog" action="#" th:action="@{/send_message_in_dialog}" th:object="${sendMessage}" method="post">
     <div class = "form"><input class="form-control input-lg" type="hidden" th:value="${senderLogin}" id="nickName" name="nickName"/>
         <input class="form-control input-lg" type="text" th:field="*{body}" placeholder="Сообщение"/></div>
     <p><input class="btn btn-warning" type="submit"  value="Отправить" />

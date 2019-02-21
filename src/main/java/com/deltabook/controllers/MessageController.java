@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 
 
@@ -90,5 +89,16 @@ public class MessageController {
         ModelAndView modelAndView = new ModelAndView(url);
         modelAndView.addObject("sendMessage", new SendMessage());
         return modelAndView;
+    }
+    @RequestMapping(value = "/get_updated_dialog",method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public List<SendMessage> getUpdatedDialog(Authentication authentication, @RequestParam("senderLogin") String  senderLogin, @RequestParam("recipientLogin") String  recipientLogin, Model model){
+        List<Message> messageList = messageService.UpdatedDialogBetweenUsers( recipientLogin, senderLogin,authentication, model);
+        model.addAttribute("messageList",messageList);
+        List<SendMessage> sendMessageList = new ArrayList<SendMessage>();
+        for (Message msg : messageList) {
+            sendMessageList.add(new SendMessage(msg));
+        }
+        return sendMessageList;
     }
 }
