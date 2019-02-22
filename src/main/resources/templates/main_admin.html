@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href="../static/css/navbar.css" th:href="@{/css/navbar.css}" rel="stylesheet" />
     <title>Admin Panel</title>
 </head>
 <body>
-<img src="../static/images/logo.png" width="419" th:src="@{images/logo.png}"/>
+<img src="../static/images/Delta1.png" width="419" th:src="@{images/Delta1.png}"/>
+<div th:insert="Header :: header"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
 <h1>Админская панель</h1>
-<p><a href="/">User panel</a>
-    <a href="/logout">Выход</a></p>
-</body>
 <h2>Смена фамилии у пользователя</h2>
 <form action="#" th:action="@{/change_user_last_name}" th:object="${SendChangeUser}" method="post">
     <p>User NickName:</p>
@@ -26,4 +30,8 @@
     <p><input type="submit" name="action" value="total_delete" />
         <input type="submit" name="action" value="temp_delete" />
 </form>
+</div>
+</div>
+</div>
+</body>
 </html>

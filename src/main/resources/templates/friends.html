@@ -4,12 +4,18 @@
     <meta charset="UTF-8">
     <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
     <link href="../static/css/friends.css" th:href="@{/css/friends.css}" rel="stylesheet" />
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href="../static/css/navbar.css" th:href="@{/css/navbar.css}" rel="stylesheet" />
     <title>Friends</title>
 </head>
 <body>
-<img src="../static/images/logo.png" width="419" th:src="@{images/logo.png}"/>
+<img src="../static/images/Delta1.png" width="419" th:src="@{images/Delta1.png}"/>
+<div th:insert="Header :: header"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
 <h2>Добавление в друзья</h2>
-<a href="/">Назад в панель пользователя</a>
 <form action="#" th:action="@{/send_friend_request}" th:object="${sendFriendRequest}" method="post">
     <p>Friend NickName:</p>
     <input type="text" th:field="*{friendNickname}" />
@@ -70,5 +76,8 @@
         <td th:text="${contact?.requestMessage}">requestMessage</td>
     </tr>
 </table>
+        </div>
+    </div>
+</div>
 </body>
 </html>

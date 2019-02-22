@@ -4,9 +4,16 @@
     <meta charset="UTF-8">
     <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
     <link href="/static/css/friends.css" th:href="@{/css/friends.css}" rel="stylesheet" />
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href="../static/css/navbar.css" th:href="@{/css/navbar.css}" rel="stylesheet" />
     <title>User Dialog</title>
 </head>
 <body>
+<div th:insert="Header :: header"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
 <script type="text/javascript" th:inline="javascript">
     var senderLogin = [[${senderLogin}]]
     var recipientLogin = [[${recipientLogin}]]
@@ -82,7 +89,7 @@
     setInterval(CheckAndGetMessage,1000);
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<img src="../static/images/logo.png" width="419" th:src="@{/images/logo.png}"/>
+<img src="../static/images/Delta1.png" width="419" th:src="@{/images/Delta1.png}"/>
 <h2>Диалог с пользователем</h2>
 <a href="/dialogs">Назад к диалогам </a>
 <div class="container">
@@ -96,5 +103,8 @@
         <input class="form-control input-lg" type="text" th:field="*{body}" placeholder="Сообщение"/></div>
     <p><input class="btn btn-warning" type="submit"  value="Отправить" />
 </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

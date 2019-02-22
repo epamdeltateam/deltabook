@@ -3,10 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href="../static/css/navbar.css" th:href="@{/css/navbar.css}" rel="stylesheet" />
     <title>DeltaBook registration</title>
 </head>
 <body>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<div th:insert="Header :: header"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
 
 <script type="text/javascript">
     function doAjax() {
@@ -27,7 +33,7 @@
         });
     }
 </script>
-<img src="../static/images/logo.png" width="419" th:src="@{images/logo.png}"/>
+            <img src="../static/images/Delta1.png" width="419" th:src="@{images/Delta1.png}"/>
 <h1>Регистрация на ДельтаБуке</h1>
 <form action="#" th:action="@{/registration}" th:object="${objectToFill}" method="post">
 <p>Login: </p>
@@ -42,5 +48,8 @@
 <input type="text" th:field="*{lastName}" />
 <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

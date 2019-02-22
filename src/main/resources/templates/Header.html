@@ -1,0 +1,32 @@
+<div th:fragment="header">
+        <div class="col-sm-3">
+            <div class="sidebar-nav">
+                <div class="navbar navbar-default" role="navigation">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <span class="visible-xs navbar-brand">Sidebar menu</span>
+                    </div>
+                    <div class="navbar-collapse collapse sidebar-navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="/">Deltabook</a></li>
+                            <li><a href="/upload_avatar">Загрузить аватарку</a></li>
+                            <li><a href="/friends">Друзья</a></li>
+                            <li><a href="/send_message">Отправить сообщение</a></li>
+                            <li><a href="/search">Поиск людей</a></li>
+                            <li><a href="/dialogs">Диалоги</a></li>
+                            <li><a href="/logout">Выход</a></li>
+                        </ul>
+                        <span th:if="${role}">
+                        <ul class="nav navbar-nav"><li> <a href="/main_admin">Админка</a></li>
+                        </ul>
+                            </span>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+</div>
