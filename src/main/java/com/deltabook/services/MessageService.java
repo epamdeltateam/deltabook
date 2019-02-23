@@ -22,4 +22,6 @@ public interface MessageService {
 
     List<Message>  UpdatedDialogBetweenUsers(String recipient, String sender, Authentication authentication, Model model);
 
+    void UpdateMessage(Message message);
+
 }

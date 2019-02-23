@@ -94,4 +94,9 @@ public class MessageServiceImpl implements MessageService {
         return messageList;
     }
 
+    public void UpdateMessage(Message message) {
+        messageRepository.saveAndFlush(message);
+        return;
+    }
+
 }

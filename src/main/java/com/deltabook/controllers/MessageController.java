@@ -95,6 +95,8 @@ public class MessageController {
         model.addAttribute("messageList",messageList);
         List<SendMessage> sendMessageList = new ArrayList<SendMessage>();
         for (Message msg : messageList) {
+            msg.setRead(true);
+            messageService.UpdateMessage(msg);
             sendMessageList.add(new SendMessage(msg));
         }
         return sendMessageList;
