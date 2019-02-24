@@ -38,10 +38,6 @@ public class MainController {
             modelAndView.addObject("hasImage", false);
         modelAndView.addObject("name", user.getFirstName());
         modelAndView.addObject("surname", user.getLastName());
-        switch(user.getRole()) {
-            case ROLE_USER: { modelAndView.addObject("role", false); break; }
-            case ROLE_ADMIN: { modelAndView.addObject("role", true); break; }
-        }
         modelAndView.setViewName("main");
         return modelAndView;
     }

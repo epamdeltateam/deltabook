@@ -21,10 +21,10 @@
                             <li><a href="/dialogs">Диалоги</a></li>
                             <li><a href="/logout">Выход</a></li>
                         </ul>
-                        <span th:if="${role}">
+                        <div sec:authorize="hasRole('ROLE_ADMIN')">
                         <ul class="nav navbar-nav"><li> <a href="/main_admin">Админка</a></li>
                         </ul>
-                            </span>
+                        </div>
                     </div><!--/.nav-collapse -->
                 </div>
             </div>
