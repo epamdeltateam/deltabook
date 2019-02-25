@@ -13,26 +13,22 @@
 <body>
     
 <script type="text/javascript">
-        var olddata="";
         var currentdata="";
     function doAjax() {
         $.ajax({
             url: 'checkStrength',
-            data: {password : $('#password').val(), 'olddata':olddata},
+            data: {password : $('#password').val()},
             success: function(data) {
                 currentdata = data;
                 var col=document.getElementById("strengthValue");
                 if(data == "слабый") {
                     col.style.color = "#ff4000";
-                    olddata = "слабый";
                 }
                 else if(data == "средний") {
                     col.style.color = "#00bfff";
-                    olddata = "средний";
                 }
                 else if(data == "сильный") {
                     col.style.color = "#00ff00";
-                    olddata = "сильный";
                 }
 
                 $('#strengthValue').html(data);
