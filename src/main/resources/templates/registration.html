@@ -5,30 +5,58 @@
     <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
     <link href="../static//js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}" rel="stylesheet" />
     <link href="../static/css/login.css" th:href="@{/css/login.css}" rel="stylesheet" />
+    <link href="../static/css/inputpopup.css" th:href="@{/css/inputpopup.css}" rel="stylesheet" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <title>Registration - DeltaBook </title>
 </head>
 <body>
     
-    <script type="text/javascript">
+<script type="text/javascript">
+        var olddata="";
+        var currentdata="";
     function doAjax() {
         $.ajax({
             url: 'checkStrength',
-            data: ({password : $('#password').val()}),
+            data: {password : $('#password').val(), 'olddata':olddata},
             success: function(data) {
-                $('#strengthValue').html(data);
+                currentdata = data;
                 var col=document.getElementById("strengthValue");
-                if(data == "слабый")
-                col.style.color="#ff4000";
-                else if(data == "средний")
-                    col.style.color="#00bfff";
-                else if(data == "сильный")
-                    col.style.color="#00ff00";
+                if(data == "слабый") {
+                    col.style.color = "#ff4000";
+                    olddata = "слабый";
+                }
+                else if(data == "средний") {
+                    col.style.color = "#00bfff";
+                    olddata = "средний";
+                }
+                else if(data == "сильный") {
+                    col.style.color = "#00ff00";
+                    olddata = "сильный";
+                }
 
+                $('#strengthValue').html(data);
+
+            },
+            error: function () {
+                 return;
             }
         });
     }
+        function Check() {
+            var col = document.getElementById("myPopup");
+            if ($(myPopup).is(":hidden") && currentdata != ""  ) {
+                col.style.display = 'block';
+                col.classList.toggle("show");
+            }
+            else {
+                if(currentdata == "") {
+                    col.style.display = 'none';
+                    return;
+                }
+            }
+        }
+        setInterval(Check,1000);
 </script>
 	
 <div class="container h-100">
@@ -70,6 +98,7 @@
                         </div>
                         
                         <input type="password"  id= "password" th:field="*{password}" th:onkeyup="doAjax()"   name="password" class="form-control input_pass" value="" placeholder="Пароль">
+                        <div class="popup"><span class="popuptext" id="myPopup"><span id="strengthValue"></span></div>
                     </div>
                    
                     <div class="d-flex justify-content-center mt-3 login_container">
