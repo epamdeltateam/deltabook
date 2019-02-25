@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
+    <link href="../static/css/friends.css" th:href="@{/css/friends.css}" rel="stylesheet" />
+    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+    <link href="../static/css/center.css" th:href="@{/css/center.css}" rel="stylesheet" />
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href="../static/css/navbar.css" th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <title>Add user</title>
+</head>
+<body>
+<div th:insert="Header :: header"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+<div class = "center_message">
+    <img src="../static/images/Delta1.png" th:src="@{images/Delta1.png}"/>
+    <br> <br>
+<h1>Поиск людей</h1>
+<form action="#" th:action="@{/search}" th:object="${SendSearchUser}" method="post">
+    <div class = "form">
+        <input class="form-control input-lg" type="text" th:field="*{Name}" placeholder="Имя пользователя" />
+    <input class="form-control input-lg" type="text" th:field="*{Surname}" placeholder="Фамилия пользователя"/>
+    <input class="form-control input-lg" type="text" th:field="*{Nickname}" placeholder="Никнейм пользователя"/>
+    </div>
+    <p><input class="btn btn-warning" type="submit"  value="Найти" /> <input class="btn btn-danger" type="reset" value="Удалить" /></p>
+</form>
+<div th:if="${HaveSearchResult} == true">
+    <table border="1">
+        <tr>
+            <th>User id</th>
+            <th>firstName</th>
+            <th>lastName</th>
+            <th>Nickname</th>
+        </tr>
+        <tr th:each="user : ${UserList}">
+            <td th:text="${user?.id}">id</td>
+            <td th:text="${user?.firstName}">firstName</td>
+            <td th:text="${user?.lastName}">lastName</td>
+            <td><a th:href="${user?.login}" th:text="${user?.login}" target="_blank" /></td>
+        </tr>
+    </table>
+</div>
+    </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

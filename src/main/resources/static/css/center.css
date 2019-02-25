@@ -1,0 +1,21 @@
+.center_error {
+    position: absolute;
+    top: 50%;
+    margin-top: -5em;
+    left: 50%;
+    margin-left: -15em;
+}
+
+.center_message {
+    position: absolute;
+    left: 50%;
+    margin-left: -15em;
+}
+
+.form{
+    width: 450%;
+}
+
+.right{
+    right: 10%;
+}

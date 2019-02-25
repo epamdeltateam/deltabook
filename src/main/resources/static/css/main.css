@@ -1,0 +1,27 @@
+body {
+}
+input[type=button], input[type=submit], input[type=reset] {
+    background-color: #FE9A2E;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+input[type=text], input[type=password]  {
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    width: 20%;
+}
+
+table {border: none;}
+
+.very_reduced_avatar {
+    height: auto;
+    width: auto;
+    max-width: 45px;
+    max-height: 45px;
+}

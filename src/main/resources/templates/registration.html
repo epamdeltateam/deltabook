@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+    <link href="../static//js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}" rel="stylesheet" />
+    <link href="../static/css/login.css" th:href="@{/css/login.css}" rel="stylesheet" />
+    <link href="../static/css/inputpopup.css" th:href="@{/css/inputpopup.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <title>Registration - DeltaBook </title>
+</head>
+<body>
+<th:block layout:fragment="script">
+    <script th:src="@{/js/PasswordStrength.js}"></script>
+</th:block>
+<div class="container h-100">
+    <div class="d-flex justify-content-center h-100">
+        <div class="user_card">
+            <div class="d-flex justify-content-center">
+                <div class="brand_logo_container">
+                    <img src="../static/images/Delta_logo.png" th:src="@{images/Delta_logo.png}" class="brand_logo" alt="Logo">
+                </div>
+            </div>
+            <div class="d-flex justify-content-center form_container">
+                <form action="#" th:action="@{/registration}" th:object="${objectToFill}" method="post">
+
+                    <h4 class="card-title mt-3 text-center">Регистрация на Deltabook</h4>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-at"></i> </span>
+                        </div>
+                        <input type="text" th:field="*{login}" class="form-control" id="inlineFormInputGroup" placeholder="Логин">
+                    </div>
+
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                        </div>
+                        <input type="text" th:field="*{firstName}"  class="form-control" id="inlineFormInputGroup" placeholder="Имя">
+                    </div>
+
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                        </div>
+                        <input type="text" th:field="*{lastName}"  class="form-control" id="inlineFormInputGroup" placeholder="Фамилия">
+                    </div>
+
+                    <div class="input-group mb-2">
+                        <div class="input-group-append">
+                            <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                        </div>
+
+                        <input type="password"  id= "password" th:field="*{password}" th:onkeyup="doAjax()"   name="password" class="form-control input_pass" value="" placeholder="Пароль">
+                        <div class="popup"><span class="popuptext" id="myPopup"><span id="strengthValue"></span></div>
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-3 login_container">
+                        <input type="submit" class="btn login_btn" value="Зарегестрироваться" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class = "img_main">
+    <img src="../static/images/img_main.png"  th:src="@{images/img_main.png}" alt="main">
+</div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href="../static/css/navbar.css" th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
+    <link href="../static/css/popup.css" th:href="@{/css/popup.css}" rel="stylesheet" />
+    <title>Пользовательская панель</title>
+</head>
+<body>
+
+<th:block layout:fragment="script">
+    <script th:src="@{/js/CheckAndGetMessage.js}"></script>
+    </th:block>
+<div th:insert="Header :: header"></div>
+<img src="../static/images/Delta1.png"  th:src="@{images/Delta1.png}"/>
+<div class="container">
+    <div class="row">
+<div class="col-sm-9">
+<table style="font-family: Helvetica; font-size: 13px; color: #000000; ">
+    <tr>
+        <td rowspan="2">
+            <div th:if="${hasImage}">
+            <img id="avatar" th:src="*{'data:image/png;base64,'+image}"  width="300" alt="" />
+            </div>
+            <div th:unless="${hasImage}">
+                <img id="default_avatar" th:src="@{/images/default-avatar.jpg}" alt="" />
+            </div>
+        </td>
+        <td valign="bottom">
+         <h4>  Name: <span th:text="${name}"></span></h4>
+        </td>
+    </tr>
+    <td  valign="top">
+        <h4> Surname:<span th:text="${surname}"></span> </h4>
+    </td>
+    
+</table>
+<div class="popup"><span class="popuptext" id="MessageForCurrentUser"></span></div>
+<div class="friend_popup"><span class="friendpopuptext" id="FriendRequestForCurrentUser"></span></div>
+</div>
+</div>
+</div>
+</body>
+</html>

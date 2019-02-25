@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
+    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+    <link href="../static/css/center.css" th:href="@{/css/center.css}" rel="stylesheet" />
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href="../static/css/navbar.css" th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <title>Admin Panel</title>
+</head>
+<body>
+<th:block layout:fragment="script">
+    <script th:src="@{/js/DeleteUser.js}"></script>
+</th:block>
+<div th:insert="Header :: header"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+<div class = "center_message">
+    <img class = "right" src="../static/images/admin_panel.png"  th:src="@{images/admin_panel.png}"/>
+    <br>
+<h1>Смена фамилии у пользователя</h1>
+<form action="#" th:action="@{/change_user_last_name}" th:object="${SendChangeUser}" method="post">
+    <div class = "form">
+    <input class="form-control input-lg" type="text" th:field="*{NickName}" placeholder="Никнейм пользователя"/>
+    <input class="form-control input-lg" type="text" th:field="*{NewLastName}" placeholder="Новая фамилия пользователя"/>
+        <input class="btn btn-warning" type="submit"  value="Отправить" />
+    </div>
+</form>
+    <br>
+<h1>Удаление пользователя</h1>
+<form name="UserDeleteForm"action="#" th:object="${SendChangeUser}" method="post">
+    <div class = "form">
+    <input class="form-control input-lg" type="text" th:field="*{NickName}" placeholder="Имя пользователя"/>
+        <button class="btn btn-danger" type="submit" name="action" value="total_delete" onclick="TotalDelete()"> Удалить навсегда </button>
+        <button class="btn btn-danger" type="submit" name="action" value="temp_delete" onclick="TempDelete()"> Временное удаление </button>
+    </div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
