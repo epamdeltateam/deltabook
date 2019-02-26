@@ -1,55 +1,112 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-
 <head>
     <meta charset="UTF-8">
-    <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+    <link href="../static//js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}" rel="stylesheet" />
+    <link href="../static/css/login.css" th:href="@{/css/login.css}" rel="stylesheet" />
+    <link href="../static/css/inputpopup.css" th:href="@{/css/inputpopup.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <link href="../static/css/navbar.css" th:href="@{/css/navbar.css}" rel="stylesheet" />
-    <title>DeltaBook registration</title>
+    <title>Registration - DeltaBook </title>
 </head>
-
 <body>
 
-    <script type="text/javascript">
-        function doAjax() {
-            $.ajax({
-                url: 'checkStrength',
-                data: ({
-                    password: $('#password').val()
-                }),
-                success: function(data) {
-                    $('#strengthValue').html(data);
-                    var col = document.getElementById("strengthValue");
-                    if (data == "слабый")
-                        col.style.color = "#ff4000";
-                    else if (data == "средний")
-                        col.style.color = "#00bfff";
-                    else if (data == "сильный")
-                        col.style.color = "#00ff00";
-
+<script type="text/javascript">
+    var currentdata="";
+    function doAjax() {
+        $.ajax({
+            url: 'checkStrength',
+            data: {password : $('#password').val()},
+            success: function(data) {
+                currentdata = data;
+                var col=document.getElementById("strengthValue");
+                if(data == "слабый") {
+                    col.style.color = "#ff4000";
                 }
-            });
+                else if(data == "средний") {
+                    col.style.color = "#00bfff";
+                }
+                else if(data == "сильный") {
+                    col.style.color = "#00ff00";
+                }
+
+                $('#strengthValue').html(data);
+
+            },
+            error: function () {
+                return;
+            }
+        });
+    }
+    function Check() {
+        var col = document.getElementById("myPopup");
+        if ($(myPopup).is(":hidden") && currentdata != ""  ) {
+            col.style.display = 'block';
+            col.classList.toggle("show");
         }
+        else {
+            if(currentdata == "") {
+                col.style.display = 'none';
+                return;
+            }
+        }
+    }
+    setInterval(Check,1000);
+</script>
 
-    </script>
-    <img src="../static/images/Delta1.png" th:src="@{images/Delta1.png}" />
-    <h1>Регистрация на ДельтаБуке</h1>
-    <form action="#" th:action="@{/registration}" th:object="${objectToFill}" method="post">
-        <p>Login: </p>
-        <input type="text" th:field="*{login}" />
-        <p>Password:</p>
-        <input type="text" id="password" th:field="*{password}" th:onkeyup="doAjax()" />
-        <span id="strengthValue">
-        </span>
-        <p>Name: </p>
-        <input type="text" th:field="*{firstName}" />
-        <p>Surname: </p>
-        <input type="text" th:field="*{lastName}" />
-        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
-    </form>
+<div class="container h-100">
+    <div class="d-flex justify-content-center h-100">
+        <div class="user_card">
+            <div class="d-flex justify-content-center">
+                <div class="brand_logo_container">
+                    <img src="../static/images/Delta_logo.png" th:src="@{images/Delta_logo.png}" class="brand_logo" alt="Logo">
+                </div>
+            </div>
+            <div class="d-flex justify-content-center form_container">
+                <form action="#" th:action="@{/registration}" th:object="${objectToFill}" method="post">
 
+                    <h4 class="card-title mt-3 text-center">Регистрация на Deltabook</h4>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-at"></i> </span>
+                        </div>
+                        <input type="text" th:field="*{login}" class="form-control" id="inlineFormInputGroup" placeholder="Логин">
+                    </div>
+
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                        </div>
+                        <input type="text" th:field="*{firstName}"  class="form-control" id="inlineFormInputGroup" placeholder="Имя">
+                    </div>
+
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                        </div>
+                        <input type="text" th:field="*{lastName}"  class="form-control" id="inlineFormInputGroup" placeholder="Фамилия">
+                    </div>
+
+                    <div class="input-group mb-2">
+                        <div class="input-group-append">
+                            <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                        </div>
+
+                        <input type="password"  id= "password" th:field="*{password}" th:onkeyup="doAjax()"   name="password" class="form-control input_pass" value="" placeholder="Пароль">
+                        <div class="popup"><span class="popuptext" id="myPopup"><span id="strengthValue"></span></div>
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-3 login_container">
+                        <input type="submit" class="btn login_btn" value="Зарегестрироваться" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class = "img_main">
+    <img src="../static/images/img_main.png"  th:src="@{images/img_main.png}" alt="main">
+</div>
 </body>
-
 </html>
