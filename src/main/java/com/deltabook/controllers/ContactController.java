@@ -47,12 +47,6 @@ public class ContactController {
         boolean checkContactFrom = contactService.checkIsContactExists(userTo,userFrom);
 
         if(userTo != null && userFrom.getLogin() !=userTo.getLogin() && checkContactTo == false && checkContactFrom == false ) {
-            List<SendFriend> friends = contactService.getAllFriends(userTo);
-            for(SendFriend friend:friends ) {
-                if(friend.getLogin() == userTo.getLogin() ) {
-                    return "main";
-                }
-            }
             contactService.sendRequestFriend(userFrom, userTo, send_req.getRequestMessage());
         }
         return "main";
