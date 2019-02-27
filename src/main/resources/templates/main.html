@@ -7,18 +7,20 @@
     <link href="../static/css/navbar.css" th:href="@{/css/navbar.css}" rel="stylesheet" />
     <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
     <link href="../static/css/popup.css" th:href="@{/css/popup.css}" rel="stylesheet" />
+    <link href="../static/css/center.css" th:href="@{/css/center.css}" rel="stylesheet" />
     <title>Пользовательская панель</title>
 </head>
 <body>
-
 <th:block layout:fragment="script">
     <script th:src="@{/js/CheckAndGetMessage.js}"></script>
     </th:block>
 <div th:insert="Header :: header"></div>
-<img src="../static/images/Delta1.png"  th:src="@{images/Delta1.png}"/>
 <div class="container">
     <div class="row">
 <div class="col-sm-9">
+    <div class = "center_message">
+        <img src="../static/images/Delta1.png"  th:src="@{images/Delta1.png}"/>
+        <br> <br>
 <table style="font-family: Helvetica; font-size: 13px; color: #000000; ">
     <tr>
         <td rowspan="2">
@@ -40,6 +42,7 @@
 </table>
 <div class="popup"><span class="popuptext" id="MessageForCurrentUser"></span></div>
 <div class="friend_popup"><span class="friendpopuptext" id="FriendRequestForCurrentUser"></span></div>
+</div>
 </div>
 </div>
 </div>
