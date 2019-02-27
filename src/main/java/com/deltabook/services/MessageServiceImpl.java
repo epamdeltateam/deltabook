@@ -24,6 +24,7 @@ public class MessageServiceImpl implements MessageService {
 
     public Message sendMessage(User userFrom, SendMessage sendMessage) {
         User userTo = userRepository.findUserByLogin(sendMessage.getNickName());
+        if(userTo == null) return null;
         String messageBody = sendMessage.getBody();
         Message message = messageRepository.save(new Message(userFrom, userTo, messageBody));
         return message;
