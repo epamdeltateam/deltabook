@@ -7,6 +7,7 @@
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link href="../static/css/navbar.css" th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link href="../static/css/center.css" th:href="@{/css/center.css}" rel="stylesheet" />
     <title>User Dialog</title>
     <script type="text/javascript" th:inline="javascript">
         function Prepare() {
@@ -27,7 +28,9 @@
 <script th:src="@{/js/DialogBetweenUsers.js}"></script>
 </th:block>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<div class = "center_message">
 <img src="../static/images/Delta1.png"  th:src="@{/images/Delta1.png}"/>
+    <br> <br>
 <h2>Диалог с пользователем</h2>
 <a href="/dialogs">Назад к диалогам </a>
 <div class="container">
@@ -43,6 +46,7 @@
 </form>
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>

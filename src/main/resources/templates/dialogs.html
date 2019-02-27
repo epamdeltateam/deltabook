@@ -7,15 +7,17 @@
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link href="../static/css/navbar.css" th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link href="../static/css/center.css" th:href="@{/css/center.css}" rel="stylesheet" />
     <title>Dialogs</title>
 </head>
 <body>
-
 <div th:insert="Header :: header"></div>
-<img src="../static/images/Delta1.png"  th:src="@{images/Delta1.png}"/>
 <div class="container">
     <div class="row">
         <div class="col-sm-9">
+            <div class = "center_message">
+                <img src="../static/images/Delta1.png"  th:src="@{images/Delta1.png}"/>
+                <br> <br>
 <h2>Диалоги</h2>
 <table cellspacing="0" cellpadding="0">
     <span th:each="dialogsList : ${dialogsList}">
@@ -29,5 +31,7 @@
         </div>
     </div>
 </div>
+</div>
+</body>
 </body>
 </html>

@@ -7,6 +7,7 @@
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link href="../static/css/navbar.css" th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link href="../static/css/center.css" th:href="@{/css/center.css}" rel="stylesheet" />
     <title>Friends</title>
 </head>
 
@@ -15,12 +16,12 @@
     <script th:src="@{/js/FriendRequest.js}"></script>
 </th:block>
     <div th:insert="Header :: header"></div>
-
-
     <div class="container">
         <div class="row">
             <div class="col-sm-9">
+                <div class = "center_message">
                     <img src="../static/images/Delta1.png" th:src="@{images/Delta1.png}" />
+                    <br> <br>
                 <div class="tabs">
                     <input id="tab1" type="radio" name="tabs" checked>
                     <label for="tab1" title="Invite">Добавить друга</label>
@@ -100,6 +101,7 @@
 
             </div>
         </div>
+</div>
 </div>
 </body>
 </html>
