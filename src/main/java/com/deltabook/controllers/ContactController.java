@@ -43,7 +43,8 @@ public class ContactController {
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User userFrom = principal.getUser();
         User userTo = userService.getUserByLogin(send_req.getFriendNickname());
-        if(userTo != null && userFrom.getLogin() !=userTo.getLogin()  ) {
+        boolean checkContact = contactService.checkIsContactExists(userFrom,userTo);
+        if(userTo != null && userFrom.getLogin() !=userTo.getLogin() && checkContact == false ) {
             contactService.sendRequestFriend(userFrom, userTo, send_req.getRequestMessage());
         }
         return "main";
