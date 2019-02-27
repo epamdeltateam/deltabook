@@ -43,7 +43,9 @@ public class ContactController {
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User userFrom = principal.getUser();
         User userTo = userService.getUserByLogin(send_req.getFriendNickname());
-        contactService.sendRequestFriend(userFrom, userTo,send_req.getRequestMessage() );
+        if(userTo != null) {
+            contactService.sendRequestFriend(userFrom, userTo, send_req.getRequestMessage());
+        }
         return "main";
     }
     @RequestMapping(value = "/get_last_friend_request",method = RequestMethod.GET, produces = "application/json")
