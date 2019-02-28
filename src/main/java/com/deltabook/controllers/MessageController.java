@@ -108,8 +108,10 @@ public class MessageController {
             UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
             User sender = principal.getUser();
             User recipient = userService.getUserByLogin(recipientLogin);
-            if(principal.getUser().getLogin() == recipient.getLogin() ) {
-                recipient = userService.getUserByLogin(senderLogin);
+            if(!(sender.getLogin().equals(userService.getUserByLogin(senderLogin).getLogin()))) {
+               if(senderLogin != recipientLogin) {
+                   recipient = userService.getUserByLogin(senderLogin);
+               }
             }
             sendMessage.setNickName(recipient.getLogin());
             Message message = messageService.sendMessage(sender, sendMessage);
