@@ -19,7 +19,7 @@
     <br> <br>
     <h1>Отправка сообщения</h1>
 <form action="#" th:action="@{/send_message}" th:object="${sendMessage}" method="post">
-    <div class = "form"><input class="form-control input-lg" type="text" th:field="*{nickName}" placeholder="Имя друга"/>
+    <div class = "form"><input class="form-control input-lg" type="text" th:field="*{nickName}" placeholder="Никнейм"/>
     <input class="form-control input-lg" type="text" th:field="*{body}" placeholder="Сообщение"/></div>
     <p><input class="btn btn-warning" type="submit"  value="Отправить" /> <input class="btn btn-danger" type="reset" value="Удалить" /></p>
 </form>
