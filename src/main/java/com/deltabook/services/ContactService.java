@@ -15,5 +15,5 @@ public interface ContactService {
     void confirmRequest(User fromUser, User toUser);
     void declineRequest(User fromUser, User toUser);
     Contact getLastNotAcceptedRequest(User friendTo);
-    void proceedFriendRequest(User fromUser, User toUser, String action);
+    boolean checkIsContactExists(User fromUser, User toUser);
 }

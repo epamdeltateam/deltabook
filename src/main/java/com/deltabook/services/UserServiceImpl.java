@@ -19,7 +19,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -32,13 +32,6 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findUserByLogin(user.getLogin()) != null) {
             return "There is already a user with this login";
         }
-//        if (user.getPassword().length() < 5) {
-//            return "Password is too small";
-//        }
-//        String pattern = "(?=.*[0-9])(?=.*[a-z]).{5,}";
-//        if (!user.getPassword().matches(pattern)) {
-//            return "Password has to contain at least one digit and and at least one letter";
-//        }
         String hashedPassword = passwordEncoder.encode(user.getPassword());
         userRepository.save(new User(user.getLogin(), hashedPassword, user.getFirstName(), user.getLastName()));
         return "Success";
@@ -75,20 +68,14 @@ public class UserServiceImpl implements UserService {
         user.setLastName(SendChangeUser.getNewLastName());
         userRepository.save(user);
     }
-    public void deleteUserWithChoose(SendChangeUser SendChangeUser, String action) {
+    public void deleteUserTotal(SendChangeUser SendChangeUser) {
         User user = userRepository.findUserByLogin(SendChangeUser.getNickName());
-        switch(action) {
-            case "total_delete": {
-                userRepository.delete(user);
-                break;
-            }
-            case "temp_delete":  {
-                user.setDeleted(true);
-                userRepository.save(user);
-                break;
-            }
-            default: break;
-        }
+        userRepository.delete(user);
+    }
+    public void deleteUserTemp(SendChangeUser SendChangeUser) {
+        User user = userRepository.findUserByLogin(SendChangeUser.getNickName());
+        user.setDeleted(true);
+        userRepository.save(user);
     }
 
     @Override
@@ -101,8 +88,9 @@ public class UserServiceImpl implements UserService {
                 userList.add(user);
                 return userList;
             }
-            else
-            return null;
+            else {
+                return null;
+            }
         }
         if(SendSearchUser.getName() != "" && SendSearchUser.getSurname() != "" ) {
             userList = userRepository.findByLastNameAndFirstName(SendSearchUser.getSurname(), SendSearchUser.getName() );

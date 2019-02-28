@@ -64,11 +64,11 @@ public class ContactServiceImpl implements ContactService{
     }
 
     @Override
-    public void proceedFriendRequest(User fromUser, User toUser, String action) {
-        if(action.equals("N"))
-            declineRequest(fromUser, toUser);
-        if(action.equals("Y") )
-            confirmRequest(fromUser, toUser);
-        return;
+    public boolean checkIsContactExists(User fromUser, User toUser) {
+        Contact contact = contactRepository.findByFriendFromIdAndFriendToId(fromUser,toUser);
+        if(contact != null)
+            return true;
+        else
+        return false;
     }
 }

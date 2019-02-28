@@ -28,10 +28,16 @@ public class AdminController {
         model.addAttribute("SendChangeUser", new SendChangeUser());
         return "main_admin";
     }
-    @RequestMapping("/delete_user")
-    public String deleteUser(Authentication authentication, Model model, @ModelAttribute SendChangeUser SendChangeUser, @RequestParam(value="action", required=true) String action) {
+    @RequestMapping("/delete_user_temp")
+    public String deleteUserTemp(Authentication authentication, Model model, @ModelAttribute SendChangeUser SendChangeUser) {
         model.addAttribute("SendChangeUser", new SendChangeUser());
-        userService.deleteUserWithChoose(SendChangeUser, action);
+        userService.deleteUserTemp(SendChangeUser);
+        return "main_admin";
+    }
+    @RequestMapping("/delete_user_total")
+    public String deleteUserTotal(Authentication authentication, Model model, @ModelAttribute SendChangeUser SendChangeUser) {
+        model.addAttribute("SendChangeUser", new SendChangeUser());
+        userService.deleteUserTotal(SendChangeUser);
         return "main_admin";
     }
 

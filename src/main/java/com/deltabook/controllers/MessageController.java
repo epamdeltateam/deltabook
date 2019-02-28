@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 
@@ -73,19 +74,40 @@ public class MessageController {
 
     @RequestMapping(value = "dialog/{recipient}/{sender}", method=RequestMethod.GET)
     public String generateDialog(@PathVariable String recipient, @PathVariable String sender, Authentication authentication, Model model) {
-        Model model_generated = messageService.generatedDialogBetweenUsers( recipient, sender,authentication, model);
+        List<Message> messageList = new ArrayList<Message>();
+        User userRecipient = userService.getUserByLogin(recipient);
+        User userSender = userService.getUserByLogin(sender);
+        UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
+        String principalLogin = principal.getUser().getLogin();
+        messageList = messageService.generatedDialogBetweenUsers( userRecipient, userSender, principalLogin);
+        model.addAttribute("messageList", messageList);
+        model.addAttribute("recipientLogin", userRecipient.getLogin());
+        model.addAttribute("senderLogin", userSender.getLogin());
+        String recipientPic = "", senderPic = " ";
+        if (userRecipient.getPicture() != null){
+            recipientPic = Base64.getEncoder().encodeToString(userRecipient.getPicture());
+        }
+        if (userSender.getPicture() != null){
+            senderPic = Base64.getEncoder().encodeToString(userSender.getPicture());
+        }
+        model.addAttribute("recipientPic", recipientPic);
+        model.addAttribute("senderPic", senderPic);
+        model.addAttribute("sendMessage", new SendMessage());
         return "dialog_between_users";
     }
     @RequestMapping(value = "/get_updated_dialog",method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public List<SendMessage> getUpdatedDialog(Authentication authentication, @RequestParam(value="senderLogin", required=false) String  senderLogin, @RequestParam(value="recipientLogin", required=false) String  recipientLogin, Model model, @RequestParam(value="nickName", required=false) String nickName ,@RequestParam(value="body", required=false) String body ){
-        if(body != null && nickName != null ) {
+    public List<SendMessage> getUpdatedDialog(Authentication authentication, @RequestParam(value="senderLogin", required=false) String  senderLogin, @RequestParam(value="recipientLogin", required=false) String  recipientLogin, Model model, @RequestParam(value="body", required=false) String body ){
+        if(body != null && senderLogin != null && recipientLogin != null ) {
             SendMessage sendMessage = new SendMessage();
             sendMessage.setBody(body);
-            sendMessage.setNickName(nickName);
             UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
             User sender = principal.getUser();
-            User recipient = userService.getUserByLogin(nickName);
+            User recipient = userService.getUserByLogin(recipientLogin);
+            if(principal.getUser().getLogin() == recipient.getLogin() ) {
+                recipient = userService.getUserByLogin(senderLogin);
+            }
+            sendMessage.setNickName(recipient.getLogin());
             Message message = messageService.sendMessage(sender, sendMessage);
             recipientLogin = recipient.getLogin();
             senderLogin = sender.getLogin();

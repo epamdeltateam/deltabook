@@ -15,6 +15,7 @@ public interface UserService {
     void deleteUser(User user);
     User uploadAvatar(User user,  MultipartFile file) throws Exception;
     void changeLastNameUser(SendChangeUser SendChangeUser);
-    void deleteUserWithChoose(SendChangeUser SendChangeUser, String action);
+    void deleteUserTotal(SendChangeUser SendChangeUser);
+    void deleteUserTemp(SendChangeUser SendChangeUser);
     List<User> getUserByNameSurnameOrNickname(SendSearchUser SendSearchUser);
 }

@@ -7,121 +7,30 @@
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link href="../static/css/navbar.css" th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link href="../static/css/center.css" th:href="@{/css/center.css}" rel="stylesheet" />
     <title>User Dialog</title>
+    <script type="text/javascript" th:inline="javascript">
+        function Prepare() {
+        var sender = [[${senderLogin}]];
+        var recipient = [[${recipientLogin}]]
+        SetSenderAndRecipient(sender, recipient);
+        CheckAndGetMessage();
+
+        }
+    </script>
 </head>
-<body onload="CheckAndGetMessage();">
+<body onload="Prepare();">
 <div th:insert="Header :: header"></div>
 <div class="container">
     <div class="row">
         <div class="col-sm-9">
-<script type="text/javascript" th:inline="javascript">
-    function json2table(json, classes) {
-        var cols = Object.keys(json[0]);
-
-        var headerRow = '';
-        var bodyRows = '';
-
-        classes = classes || '';
-
-        function capitalizeFirstLetter(string) {
-            return string.charAt(0).toUpperCase() + string.slice(1);
-        }
-
-        cols.map(function(col) {
-            headerRow += '<th>' + capitalizeFirstLetter(col) + '</th>';
-        });
-
-        json.map(function(row) {
-
-            cols.map(function(colName) {
-                if(colName == 'id') return;
-                if(colName == 'timestamp') return;
-                if(colName == 'body') {bodyRows += '<tr>' + '<td>'+ row[colName] + '</td>' + '</tr>' ; return;}
-                if(colName == 'nickName') {
-                    bodyRows += '<tr>' + '<td>'+ '<a class="user_link" href=/' + row[colName] +'>' + row[colName] + '</a>' + '</td>' + '</tr>' ;
-                    return;
-                }
-                if(colName == 'picture') {
-                    bodyRows += '<tr>' + '<td>'+ '<img class="very_reduced_avatar" src="data:image/png;base64,' + row[colName] + '" alt="" />' + '</td>' + '</tr>' ;
-                    return;
-                }
-            })
-
-        });
-
-        return '<table class="' +
-            classes +
-            '"><thead><tr>' +
-            '</tr></thead><tbody>' +
-            bodyRows +
-            '</tbody></table>';
-    }
-    var senderLogin = [[${senderLogin}]]
-    var recipientLogin = [[${recipientLogin}]]
-    function CheckAndGetMessage() {
-        $.ajax({
-            type : "GET",
-            url: '/get_updated_dialog',
-            data: {'senderLogin':senderLogin, 'recipientLogin':recipientLogin },
-            dataType : 'json',
-            success: function (messageList) {
-                document.getElementById('messageTable').innerHTML = json2table(messageList, 'table');
-
-                var dom = {
-                    data: document.getElementById('data'),
-                    table: document.getElementById('messageTable'),
-                };
-
-                dom.data.value = JSON.stringify(messageList);
-                dom.data.addEventListener('input', function() {
-                    dom.table.innerHTML = json2table(JSON.parse(messageList), 'table');
-                });
-                return;
-            },
-            error: function(){
-                return;
-            }
-
-        });
-    };
-
-   setInterval(CheckAndGetMessage,1000);
-    var nickName = "";
-    var body  = "";
-    function sendDataOfForm(theForm) {
-        nickName = theForm.nickName;
-        body  = theForm.body;
-        $.ajax({
-            type: "GET",
-            url: '/get_updated_dialog',
-            async:false,
-            data: {'nickName': nickName.value, 'body': body.value},
-            dataType: 'json',
-            success: function (messageList) {
-                document.getElementById('messageTable').innerHTML = json2table(messageList, 'table');
-
-                var dom = {
-                    data: document.getElementById('data'),
-                    table: document.getElementById('messageTable'),
-                };
-
-                dom.data.value = JSON.stringify(messageList);
-                dom.data.addEventListener('input', function() {
-                    dom.table.innerHTML = json2table(JSON.parse(messageList), 'table');
-                });
-                return;
-            },
-
-            error: function () {
-                return;
-            }
-        });
-        theForm.reset();
-        return ;
-    }
-</script>
+<th:block layout:fragment="script">
+<script th:src="@{/js/DialogBetweenUsers.js}"></script>
+</th:block>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<div class = "center_message">
 <img src="../static/images/Delta1.png"  th:src="@{/images/Delta1.png}"/>
+    <br> <br>
 <h2>Диалог с пользователем</h2>
 <a href="/dialogs">Назад к диалогам </a>
 <div class="container">
@@ -131,12 +40,13 @@
 </div>
 </div>
 <form action="javascript:;" id="send_message_in_dialog" onsubmit="sendDataOfForm(this);">
-    <div class = "form"><input class="form-control input-lg" type="hidden" id="nickName" th:value="${senderLogin}" name="nickName"/>
+    <div class = "form">
         <input class="form-control input-lg" type="text" id="body" placeholder="Сообщение"/></div>
     <p><input class="btn btn-warning" type="submit"  value="Отправить" />
 </form>
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>

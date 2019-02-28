@@ -7,17 +7,21 @@
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link href="../static/css/navbar.css" th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link href="../static/css/center.css" th:href="@{/css/center.css}" rel="stylesheet" />
     <title>Friends</title>
 </head>
 
 <body>
+<th:block layout:fragment="script">
+    <script th:src="@{/js/FriendRequest.js}"></script>
+</th:block>
     <div th:insert="Header :: header"></div>
-
-
     <div class="container">
         <div class="row">
             <div class="col-sm-9">
+                <div class = "center_message">
                     <img src="../static/images/Delta1.png" th:src="@{images/Delta1.png}" />
+                    <br> <br>
                 <div class="tabs">
                     <input id="tab1" type="radio" name="tabs" checked>
                     <label for="tab1" title="Invite">Добавить друга</label>
@@ -67,11 +71,11 @@
                                 <td><a th:href="${contact?.friendFromId.login}" th:text="${contact?.friendFromId.firstName}" target="_blank" /></td>
                                 <td th:text="${contact?.createdAt}"></td>
                                 <td th:text="${contact?.requestMessage}"></td>
-                                <form action="#" th:action="@{/proceed_friend_request}" th:object="${sendFriendRequest}" method="post">
+                                <form name="FriendRequestForm" th:object="${sendFriendRequest}" method="post">
                                     <td>
-                                        <input type="hidden" name="friendNickname" th:value="${contact?.friendFromId.login}" />
-                                        <input type="submit" name="action" value="Y" />
-                                        <input type="submit" name="action" value="N" />
+                                        <input type="hidden" id="friendNickname" name="friendNickname" th:value="${contact?.friendFromId.login}" />
+                                        <input type="submit" name="action" value="Y" onclick="AcceptRequest()" />
+                                        <input type="submit" name="action" value="N" onclick="DeclineRequest()" />
                                     </td>
                                 </form>
                             </tr>
@@ -97,6 +101,7 @@
 
             </div>
         </div>
+</div>
 </div>
 </body>
 </html>

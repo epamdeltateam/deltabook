@@ -34,8 +34,9 @@ public class MainController {
             modelAndView.addObject("image", image_string);
             modelAndView.addObject("hasImage", true);
         }
-        else
+        else {
             modelAndView.addObject("hasImage", false);
+        }
         modelAndView.addObject("name", user.getFirstName());
         modelAndView.addObject("surname", user.getLastName());
         modelAndView.setViewName("main");

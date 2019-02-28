@@ -10,7 +10,7 @@ import java.util.Collections;
 
 public class UserDetailsImpl  implements UserDetails {
 
-    User user;
+    private User user;
 
     public UserDetailsImpl(User user) {
         this.user = user;

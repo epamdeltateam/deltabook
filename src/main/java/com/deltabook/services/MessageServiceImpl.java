@@ -17,13 +17,14 @@ import java.util.*;
 public class MessageServiceImpl implements MessageService {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    MessageRepository messageRepository;
+    private MessageRepository messageRepository;
 
     public Message sendMessage(User userFrom, SendMessage sendMessage) {
         User userTo = userRepository.findUserByLogin(sendMessage.getNickName());
+        if(userTo == null) return null;
         String messageBody = sendMessage.getBody();
         Message message = messageRepository.save(new Message(userFrom, userTo, messageBody));
         return message;
@@ -45,45 +46,32 @@ public class MessageServiceImpl implements MessageService {
         Set<User> setOfUsers = new HashSet<>();
         List<Message> messageList = messageRepository.findByRecipientIDOrSenderIDOrderByCreatedAt(user, user);
         for (Message msg : messageList) {
-            if (msg.getSenderID().equals(user))
+            if (msg.getSenderID().equals(user)) {
                 setOfUsers.add(msg.getRecipientID());
-            else setOfUsers.add(msg.getSenderID());
+            }
+            else {
+                setOfUsers.add(msg.getSenderID());
+            }
         }
 
         return new ArrayList<>(setOfUsers);
     }
 
     @Override
-    public Model generatedDialogBetweenUsers(String recipient, String sender, Authentication authentication, Model model) {
+    public List<Message> generatedDialogBetweenUsers(User userRecipient, User userSender, String principalLogin) {
         List<Message> messageList = new ArrayList<Message>();
-        UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
-        User userRecipient = userRepository.findUserByLogin(recipient);
-        User userSender = userRepository.findUserByLogin(sender);
         messageList = getDialog(userRecipient,userSender );
         String recipientLogin = userRecipient.getLogin();
         String senderLogin = userSender.getLogin();
-        if(recipientLogin != principal.getUser().getLogin()) {
-            if(senderLogin == principal.getUser().getLogin()) {
+        if(recipientLogin != principalLogin) {
+            if(senderLogin == principalLogin) {
                 String temp = recipientLogin;
                 recipientLogin = senderLogin;
                 senderLogin = temp;
 
             }
         }
-        model.addAttribute("messageList", messageList);
-        model.addAttribute("recipientLogin", recipientLogin);
-        model.addAttribute("senderLogin", senderLogin);
-        String recipientPic = "", senderPic = " ";
-        if (userRecipient.getPicture() != null){
-            recipientPic = Base64.getEncoder().encodeToString(userRecipient.getPicture());
-        }
-        if (userSender.getPicture() != null){
-            senderPic = Base64.getEncoder().encodeToString(userSender.getPicture());
-        }
-        model.addAttribute("recipientPic", recipientPic);
-        model.addAttribute("senderPic", senderPic);
-        model.addAttribute("sendMessage", new SendMessage());
-        return model;
+        return messageList;
     }
     public List<Message>  UpdatedDialogBetweenUsers(String recipient, String sender, Authentication authentication, Model model) {
         List<Message> messageList = new ArrayList<Message>();

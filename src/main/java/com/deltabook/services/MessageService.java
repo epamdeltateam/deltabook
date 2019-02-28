@@ -18,7 +18,7 @@ public interface MessageService {
 
     List <User> getAllChatCompanionsOfUser(User user);
 
-    Model generatedDialogBetweenUsers(String recipient, String sender, Authentication authentication, Model model);
+    List<Message> generatedDialogBetweenUsers(User recipient, User sender, String principalLogin);
 
     List<Message>  UpdatedDialogBetweenUsers(String recipient, String sender, Authentication authentication, Model model);
 
