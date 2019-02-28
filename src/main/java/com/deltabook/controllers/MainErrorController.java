@@ -21,4 +21,14 @@ public class MainErrorController implements ErrorController {
     public String authError() {
         return "error_auth";
     }
+
+    @RequestMapping("/error_friend_request")
+    public String friendRequestError() {
+        return "error_friend_request";
+    }
+
+    @RequestMapping("/error_send_message")
+    public String sendMessageError() {
+        return "error_auth";
+    }
 }

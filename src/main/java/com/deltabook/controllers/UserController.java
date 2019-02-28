@@ -39,7 +39,7 @@ public class UserController {
         } catch (Exception ex) {
             model.addAttribute("msg", ex.getMessage());
         }
-        return "upload_avatar";
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/{nickname}")

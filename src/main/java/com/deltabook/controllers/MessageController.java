@@ -38,8 +38,12 @@ public class MessageController {
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User userFrom = principal.getUser();
         Message message = messageService.sendMessage(userFrom, recipient);
-        model.addAttribute("sendMessage", new SendMessage());
-        return "send_message";
+        if(message != null ) {
+            return "redirect:/send_message";
+        }
+        else {
+            return "/error_send_message";
+        }
     }
 
     @RequestMapping(value = "/get_last_message",method = RequestMethod.GET, produces = "application/json")

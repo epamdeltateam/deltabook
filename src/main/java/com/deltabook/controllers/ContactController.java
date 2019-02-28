@@ -36,7 +36,7 @@ public class ContactController {
         model.addAttribute("contactSentList", contactListFrom);
         List<SendFriend> friends = contactService.getAllFriends(userTo);
         model.addAttribute("Friends", friends);
-        return "friends";
+        return "/friends";
     }
     @PostMapping("/send_friend_request")
     String sendRequest(Authentication authentication, Model model, @ModelAttribute SendFriendRequest send_req) {
@@ -48,8 +48,10 @@ public class ContactController {
 
         if(userTo != null && userFrom.getLogin() !=userTo.getLogin() && checkContactTo == false && checkContactFrom == false ) {
             contactService.sendRequestFriend(userFrom, userTo, send_req.getRequestMessage());
+            return "redirect:friends";
         }
-        return "main";
+        else
+            return "/error_friend_request";
     }
     @RequestMapping(value = "/get_last_friend_request",method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
@@ -71,7 +73,7 @@ public class ContactController {
         User userTo = principal.getUser();
         User userFrom = userService.getUserByLogin(send_req.getFriendNickname());
         contactService.confirmRequest(userFrom, userTo);
-        return "main";
+        return "redirect:friends";
     }
     @PostMapping("/decline_friend_request")
     String declineFriendRequest(Authentication authentication, Model model,@ModelAttribute SendFriendRequest send_req) {
@@ -79,6 +81,6 @@ public class ContactController {
         User userTo = principal.getUser();
         User userFrom = userService.getUserByLogin(send_req.getFriendNickname());
         contactService.declineRequest(userFrom, userTo);
-        return "main";
+        return "redirect:friends";
     }
 }
