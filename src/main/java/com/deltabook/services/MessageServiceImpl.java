@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 
 import java.util.*;
 
+
 @Service
 public class MessageServiceImpl implements MessageService {
 
@@ -24,10 +25,9 @@ public class MessageServiceImpl implements MessageService {
 
     public Message sendMessage(User userFrom, SendMessage sendMessage) {
         User userTo = userRepository.findUserByLogin(sendMessage.getNickName());
-        if(userTo == null) return null;
+        if(Objects.isNull(userTo)) return null;
         String messageBody = sendMessage.getBody();
-        Message message = messageRepository.save(new Message(userFrom, userTo, messageBody));
-        return message;
+        return messageRepository.save(new Message(userFrom, userTo, messageBody));
     }
 
     @Override
@@ -37,8 +37,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<Message> getDialog(User recipientId, User senderId) {
-        List<Message> messageList = messageRepository.findMessagesBetweenTwoUsers(senderId, recipientId);
-        return messageList;
+        return messageRepository.findMessagesBetweenTwoUsers(senderId, recipientId);
     }
 
     @Override
@@ -59,32 +58,17 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<Message> generatedDialogBetweenUsers(User userRecipient, User userSender, String principalLogin) {
-        List<Message> messageList = new ArrayList<Message>();
-        messageList = getDialog(userRecipient,userSender );
-        String recipientLogin = userRecipient.getLogin();
-        String senderLogin = userSender.getLogin();
-        if(recipientLogin != principalLogin) {
-            if(senderLogin == principalLogin) {
-                String temp = recipientLogin;
-                recipientLogin = senderLogin;
-                senderLogin = temp;
-
-            }
-        }
-        return messageList;
+        return getDialog(userRecipient,userSender );
     }
     public List<Message>  UpdatedDialogBetweenUsers(String recipient, String sender, Authentication authentication, Model model) {
-        List<Message> messageList = new ArrayList<Message>();
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User userRecipient = userRepository.findUserByLogin(recipient);
         User userSender = userRepository.findUserByLogin(sender);
-        messageList = getDialog(userRecipient,userSender );
-        return messageList;
+        return getDialog(userRecipient,userSender );
     }
 
     public void UpdateMessage(Message message) {
         messageRepository.saveAndFlush(message);
-        return;
     }
 
 }

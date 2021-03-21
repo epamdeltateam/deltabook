@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class ContactController {
@@ -46,7 +47,7 @@ public class ContactController {
         boolean checkContactTo = contactService.checkIsContactExists(userFrom,userTo);
         boolean checkContactFrom = contactService.checkIsContactExists(userTo,userFrom);
 
-        if(userTo != null && userFrom.getLogin() !=userTo.getLogin() && checkContactTo == false && checkContactFrom == false ) {
+        if(Objects.nonNull(userTo) && !userFrom.getLogin().equals(userTo.getLogin()) && !checkContactTo && !checkContactFrom) {
             contactService.sendRequestFriend(userFrom, userTo, send_req.getRequestMessage());
             return "redirect:friends";
         }
@@ -59,10 +60,8 @@ public class ContactController {
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User friendTo = principal.getUser();
 
-        System.out.println(idOfPreviousContact);
-
         Contact contact = contactService.getLastNotAcceptedRequest(friendTo);
-        if (contact == null || contact.getId().equals(idOfPreviousContact)){
+        if (Objects.isNull(contact) || contact.getId().equals(idOfPreviousContact)){
             return null;
         }
         return new SendFriendRequest(contact);

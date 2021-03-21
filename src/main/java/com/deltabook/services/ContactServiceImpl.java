@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ContactServiceImpl implements ContactService{
@@ -18,10 +19,10 @@ public class ContactServiceImpl implements ContactService{
 
     public String sendRequestFriend(User fromUser, User toUser, String requestMessage) {
         Contact newContact = new Contact(fromUser, toUser, requestMessage);
-        if (contactRepository.findByFriendFromIdAndFriendToId(fromUser, toUser) != null) {
+        if (Objects.nonNull(contactRepository.findByFriendFromIdAndFriendToId(fromUser, toUser))) {
             return "Request was sent before";
         }
-        contactRepository.save(new Contact(fromUser, toUser, requestMessage));
+        contactRepository.save(newContact);
         return "Success";
     }
 
@@ -66,9 +67,6 @@ public class ContactServiceImpl implements ContactService{
     @Override
     public boolean checkIsContactExists(User fromUser, User toUser) {
         Contact contact = contactRepository.findByFriendFromIdAndFriendToId(fromUser,toUser);
-        if(contact != null)
-            return true;
-        else
-        return false;
+        return contact != null;
     }
 }
