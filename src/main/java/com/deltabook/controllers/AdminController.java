@@ -1,6 +1,8 @@
 package com.deltabook.controllers;
 
+import com.deltabook.model.User;
 import com.deltabook.model.send.SendChangeUser;
+import com.deltabook.security.details.UserDetailsImpl;
 import com.deltabook.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -28,14 +30,26 @@ public class AdminController {
     @RequestMapping("/delete_user_temp")
     public String deleteUserTemp(Authentication authentication, Model model, @ModelAttribute SendChangeUser SendChangeUser) {
         model.addAttribute("SendChangeUser", new SendChangeUser());
-        userService.deleteUserTemp(SendChangeUser);
-        return "main_admin";
+        User currentUser = ((UserDetailsImpl) authentication.getPrincipal()).getUser();
+        if(!SendChangeUser.getNickName().equals(currentUser.getLogin())) {
+            userService.deleteUserTemp(SendChangeUser);
+            return "main_admin";
+        }
+        else {
+            return "error";
+        }
     }
     @RequestMapping("/delete_user_total")
     public String deleteUserTotal(Authentication authentication, Model model, @ModelAttribute SendChangeUser SendChangeUser) {
         model.addAttribute("SendChangeUser", new SendChangeUser());
-        userService.deleteUserTotal(SendChangeUser);
-        return "main_admin";
+        User currentUser = ((UserDetailsImpl) authentication.getPrincipal()).getUser();
+        if(!SendChangeUser.getNickName().equals(currentUser.getLogin())) {
+            userService.deleteUserTotal(SendChangeUser);
+            return "main_admin";
+        }
+        else {
+            return "error";
+        }
     }
 
 }
