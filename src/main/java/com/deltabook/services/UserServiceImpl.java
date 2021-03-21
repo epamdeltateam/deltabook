@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 @Service
@@ -29,7 +30,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public String registerUser(User user) {
-        if (userRepository.findUserByLogin(user.getLogin()) != null) {
+        if (Objects.nonNull(userRepository.findUserByLogin(user.getLogin()))) {
             return "There is already a user with this login";
         }
         String hashedPassword = passwordEncoder.encode(user.getPassword());
@@ -41,7 +42,7 @@ public class UserServiceImpl implements UserService {
         if (passwordEncoder.encode(newUser.getPassword()).equals(passwordEncoder.encode(oldUser.getPassword()))){
             return "Wrong Password";
         }
-        if (userRepository.findUserByLogin(newUser.getLogin()) != null && userRepository.findUserByLogin(newUser.getLogin()) != oldUser) {
+        if (Objects.nonNull(userRepository.findUserByLogin(newUser.getLogin())) && !userRepository.findUserByLogin(newUser.getLogin()).equals(oldUser)) {
             return "There is already a user with this login";
         }
         newUser.setId(oldUser.getId());
@@ -81,10 +82,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getUserByNameSurnameOrNickname(SendSearchUser SendSearchUser) {
         User user;
-        List<User> userList = new ArrayList<User>();
-        if(SendSearchUser.getNickname() != "") {
+        List<User> userList = new ArrayList<>();
+        if(!SendSearchUser.getNickname().equals("")) {
             user = getUserByLogin(SendSearchUser.getNickname());
-            if(user != null) {
+            if(Objects.nonNull(user)) {
                 userList.add(user);
                 return userList;
             }
@@ -92,15 +93,15 @@ public class UserServiceImpl implements UserService {
                 return null;
             }
         }
-        if(SendSearchUser.getName() != "" && SendSearchUser.getSurname() != "" ) {
+        if(!SendSearchUser.getName().equals("") && !SendSearchUser.getSurname().equals("")) {
             userList = userRepository.findByLastNameAndFirstName(SendSearchUser.getSurname(), SendSearchUser.getName() );
             return userList;
         }
-        if(SendSearchUser.getName() == "" && SendSearchUser.getSurname() != "" ) {
+        if(SendSearchUser.getName().equals("") && !SendSearchUser.getSurname().equals("")) {
             userList = userRepository.findByLastName(SendSearchUser.getSurname());
             return userList;
         }
-        if(SendSearchUser.getName() != "" && SendSearchUser.getSurname() == "" ) {
+        if(!SendSearchUser.getName().equals("") && SendSearchUser.getSurname().equals("")) {
             userList = userRepository.findByFirstName(SendSearchUser.getName());
             return userList;
         }

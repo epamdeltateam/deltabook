@@ -11,11 +11,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.Objects;
 
 
 @Controller
@@ -38,7 +38,7 @@ public class MessageController {
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User userFrom = principal.getUser();
         Message message = messageService.sendMessage(userFrom, recipient);
-        if(message != null ) {
+        if(Objects.nonNull(message)) {
             return "redirect:/send_message";
         }
         else {
@@ -52,7 +52,7 @@ public class MessageController {
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User userRecipient = principal.getUser();
         Message message = messageService.getLastUnreadMessage(userRecipient);
-        if (message == null || message.getId().equals(idOfPreviousMessage)){
+        if (Objects.isNull(message) || message.getId().equals(idOfPreviousMessage)){
             return null;
         }
         return new SendMessage(message);
@@ -60,16 +60,12 @@ public class MessageController {
 
     @GetMapping("/dialogs")
     String dialogs(Authentication authentication, Model model) {
-        List<User> sendersList = new ArrayList<User>();
-        List<Message> messageList = new ArrayList<Message>();
-        List<List<Message>> dialogsList = new ArrayList<List<Message>>();
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User userRecipient = principal.getUser();
-        User userSender = null;
-        sendersList = messageService.getAllChatCompanionsOfUser(userRecipient);
+        List<User> sendersList = messageService.getAllChatCompanionsOfUser(userRecipient);
+        List<List<Message>> dialogsList = new ArrayList<>();
         for (User user : sendersList) {
-            userSender = user;
-            messageList = messageService.getDialog(userRecipient,userSender );
+            List<Message> messageList  = messageService.getDialog(userRecipient,user );
             dialogsList.add(messageList);
         }
         model.addAttribute("dialogsList", dialogsList);
@@ -78,20 +74,19 @@ public class MessageController {
 
     @RequestMapping(value = "dialog/{recipient}/{sender}", method=RequestMethod.GET)
     public String generateDialog(@PathVariable String recipient, @PathVariable String sender, Authentication authentication, Model model) {
-        List<Message> messageList = new ArrayList<Message>();
         User userRecipient = userService.getUserByLogin(recipient);
         User userSender = userService.getUserByLogin(sender);
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         String principalLogin = principal.getUser().getLogin();
-        messageList = messageService.generatedDialogBetweenUsers( userRecipient, userSender, principalLogin);
+        List<Message> messageList = messageService.generatedDialogBetweenUsers( userRecipient, userSender, principalLogin);
         model.addAttribute("messageList", messageList);
         model.addAttribute("recipientLogin", userRecipient.getLogin());
         model.addAttribute("senderLogin", userSender.getLogin());
         String recipientPic = "", senderPic = " ";
-        if (userRecipient.getPicture() != null){
+        if (Objects.nonNull(userRecipient.getPicture())){
             recipientPic = Base64.getEncoder().encodeToString(userRecipient.getPicture());
         }
-        if (userSender.getPicture() != null){
+        if (Objects.nonNull(userSender.getPicture())){
             senderPic = Base64.getEncoder().encodeToString(userSender.getPicture());
         }
         model.addAttribute("recipientPic", recipientPic);
@@ -102,26 +97,26 @@ public class MessageController {
     @RequestMapping(value = "/get_updated_dialog",method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public List<SendMessage> getUpdatedDialog(Authentication authentication, @RequestParam(value="senderLogin", required=false) String  senderLogin, @RequestParam(value="recipientLogin", required=false) String  recipientLogin, Model model, @RequestParam(value="body", required=false) String body ){
-        if(body != null && senderLogin != null && recipientLogin != null ) {
+        if(Objects.nonNull(body) && Objects.nonNull(senderLogin) && Objects.nonNull(recipientLogin)) {
             SendMessage sendMessage = new SendMessage();
             sendMessage.setBody(body);
             UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
             User sender = principal.getUser();
             User recipient = userService.getUserByLogin(recipientLogin);
             if(!(sender.getLogin().equals(userService.getUserByLogin(senderLogin).getLogin()))) {
-               if(senderLogin != recipientLogin) {
+               if(!senderLogin.equals(recipientLogin)) {
                    recipient = userService.getUserByLogin(senderLogin);
                }
             }
             sendMessage.setNickName(recipient.getLogin());
-            Message message = messageService.sendMessage(sender, sendMessage);
+            messageService.sendMessage(sender, sendMessage);
             recipientLogin = recipient.getLogin();
             senderLogin = sender.getLogin();
 
         }
         List<Message> messageList = messageService.UpdatedDialogBetweenUsers( recipientLogin, senderLogin,authentication, model);
         model.addAttribute("messageList",messageList);
-        List<SendMessage> sendMessageList = new ArrayList<SendMessage>();
+        List<SendMessage> sendMessageList = new ArrayList<>();
         for (Message msg : messageList) {
             msg.setRead(true);
             messageService.UpdateMessage(msg);

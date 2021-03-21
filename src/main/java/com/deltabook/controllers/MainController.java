@@ -1,23 +1,15 @@
 package com.deltabook.controllers;
 
-import com.deltabook.model.*;
-import com.deltabook.model.send.SendFriendRequest;
-import com.deltabook.model.send.SendMessage;
-import com.deltabook.repositories.ContactRepository;
-import com.deltabook.repositories.MessageRepository;
-import com.deltabook.repositories.UserRepository;
+import com.deltabook.model.User;
 import com.deltabook.security.details.UserDetailsImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
 import java.util.Base64;
+import java.util.Objects;
 
 @Controller
 public class MainController {
@@ -29,7 +21,7 @@ public class MainController {
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User user = principal.getUser();
         String image_string;
-        if (user.getPicture() != null){
+        if (Objects.nonNull(user.getPicture())){
             image_string = Base64.getEncoder().encodeToString(user.getPicture());
             modelAndView.addObject("image", image_string);
             modelAndView.addObject("hasImage", true);
