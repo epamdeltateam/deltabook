@@ -15,12 +15,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 @SpringBootTest
 public class DemoApplicationTests {
 
-	@Autowired
-	private AdminController adminController;
+    @Autowired
+    private AdminController adminController;
 
     @Test
     public void contextLoads() {
-		assertFalse(Objects.isNull(adminController));
+        assertFalse(Objects.isNull(adminController));
     }
 
 }

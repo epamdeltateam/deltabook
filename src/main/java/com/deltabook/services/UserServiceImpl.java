@@ -25,10 +25,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Override
     public User getUserByLogin(String login) {
         return userRepository.findUserByLogin(login);
     }
 
+    @Override
     public String registerUser(User user) {
         if (Objects.nonNull(userRepository.findUserByLogin(user.getLogin()))) {
             return "There is already a user with this login";
@@ -38,8 +40,9 @@ public class UserServiceImpl implements UserService {
         return "Success";
     }
 
+    @Override
     public String updateUser(User newUser, User oldUser) {
-        if (passwordEncoder.encode(newUser.getPassword()).equals(passwordEncoder.encode(oldUser.getPassword()))){
+        if (passwordEncoder.encode(newUser.getPassword()).equals(passwordEncoder.encode(oldUser.getPassword()))) {
             return "Wrong Password";
         }
         if (Objects.nonNull(userRepository.findUserByLogin(newUser.getLogin())) && !userRepository.findUserByLogin(newUser.getLogin()).equals(oldUser)) {
@@ -50,34 +53,48 @@ public class UserServiceImpl implements UserService {
         return "Success";
     }
 
+    @Override
     public void deleteUser(User user) {
         user.setDeleted(true);
         userRepository.saveAndFlush(user);
     }
 
-    public User uploadAvatar(User user,  MultipartFile file) throws Exception{
-        try{
+    @Override
+    public User uploadAvatar(User user, MultipartFile file) throws Exception {
+        try {
             user.setPicture(file.getBytes());
             user = userRepository.saveAndFlush(user);
-        } catch (IOException ex){
+        } catch (IOException ex) {
             throw new Exception("Cannot read file");
         }
         return user;
     }
+
+    @Override
     public void changeLastNameUser(SendChangeUser SendChangeUser) {
         User user = userRepository.findUserByLogin(SendChangeUser.getNickName());
-        if(user == null) {
+        if (user == null) {
             throw new IllegalArgumentException("User not found");
         }
         user.setLastName(SendChangeUser.getNewLastName());
         userRepository.save(user);
     }
+
+    @Override
     public void deleteUserTotal(SendChangeUser SendChangeUser) {
         User user = userRepository.findUserByLogin(SendChangeUser.getNickName());
+        if (user == null) {
+            throw new IllegalArgumentException("User not found");
+        }
         userRepository.delete(user);
     }
+
+    @Override
     public void deleteUserTemp(SendChangeUser SendChangeUser) {
         User user = userRepository.findUserByLogin(SendChangeUser.getNickName());
+        if (user == null) {
+            throw new IllegalArgumentException("User not found");
+        }
         user.setDeleted(true);
         userRepository.save(user);
     }
@@ -86,25 +103,24 @@ public class UserServiceImpl implements UserService {
     public List<User> getUserByNameSurnameOrNickname(SendSearchUser SendSearchUser) {
         User user;
         List<User> userList = new ArrayList<>();
-        if(!SendSearchUser.getNickname().equals("")) {
+        if (!SendSearchUser.getNickname().equals("")) {
             user = getUserByLogin(SendSearchUser.getNickname());
-            if(Objects.nonNull(user)) {
+            if (Objects.nonNull(user)) {
                 userList.add(user);
                 return userList;
-            }
-            else {
+            } else {
                 return null;
             }
         }
-        if(!SendSearchUser.getName().equals("") && !SendSearchUser.getSurname().equals("")) {
-            userList = userRepository.findByLastNameAndFirstName(SendSearchUser.getSurname(), SendSearchUser.getName() );
+        if (!SendSearchUser.getName().equals("") && !SendSearchUser.getSurname().equals("")) {
+            userList = userRepository.findByLastNameAndFirstName(SendSearchUser.getSurname(), SendSearchUser.getName());
             return userList;
         }
-        if(SendSearchUser.getName().equals("") && !SendSearchUser.getSurname().equals("")) {
+        if (SendSearchUser.getName().equals("") && !SendSearchUser.getSurname().equals("")) {
             userList = userRepository.findByLastName(SendSearchUser.getSurname());
             return userList;
         }
-        if(!SendSearchUser.getName().equals("") && SendSearchUser.getSurname().equals("")) {
+        if (!SendSearchUser.getName().equals("") && SendSearchUser.getSurname().equals("")) {
             userList = userRepository.findByFirstName(SendSearchUser.getName());
             return userList;
         }

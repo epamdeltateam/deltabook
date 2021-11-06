@@ -16,8 +16,8 @@ public class User {
         this.login = login;
         this.password = password;
         this.role = ROLE_USER;
-        this.isBlocked=false;
-        this.isDeleted=false;
+        this.isBlocked = false;
+        this.isDeleted = false;
     }
 
     public User(String login, String password, String firstName, String lastName) {
@@ -26,8 +26,8 @@ public class User {
         this.role = ROLE_USER;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.isBlocked=false;
-        this.isDeleted=false;
+        this.isBlocked = false;
+        this.isDeleted = false;
     }
 
     @Id

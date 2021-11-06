@@ -21,33 +21,34 @@ public class AdminController {
         model.addAttribute("SendChangeUser", new SendChangeUser());
         return "main_admin";
     }
+
     @RequestMapping("/change_user_last_name")
     public String changeUserLastName(Authentication authentication, Model model, @ModelAttribute SendChangeUser SendChangeUser) {
         userService.changeLastNameUser(SendChangeUser);
         model.addAttribute("SendChangeUser", new SendChangeUser());
         return "main_admin";
     }
+
     @RequestMapping("/delete_user_temp")
     public String deleteUserTemp(Authentication authentication, Model model, @ModelAttribute SendChangeUser SendChangeUser) {
         model.addAttribute("SendChangeUser", new SendChangeUser());
         User currentUser = ((UserDetailsImpl) authentication.getPrincipal()).getUser();
-        if(!SendChangeUser.getNickName().equals(currentUser.getLogin())) {
+        if (!SendChangeUser.getNickName().equals(currentUser.getLogin())) {
             userService.deleteUserTemp(SendChangeUser);
             return "main_admin";
-        }
-        else {
+        } else {
             return "error";
         }
     }
+
     @RequestMapping("/delete_user_total")
     public String deleteUserTotal(Authentication authentication, Model model, @ModelAttribute SendChangeUser SendChangeUser) {
         model.addAttribute("SendChangeUser", new SendChangeUser());
         User currentUser = ((UserDetailsImpl) authentication.getPrincipal()).getUser();
-        if(!SendChangeUser.getNickName().equals(currentUser.getLogin())) {
+        if (!SendChangeUser.getNickName().equals(currentUser.getLogin())) {
             userService.deleteUserTotal(SendChangeUser);
             return "main_admin";
-        }
-        else {
+        } else {
             return "error";
         }
     }

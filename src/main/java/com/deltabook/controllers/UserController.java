@@ -46,13 +46,12 @@ public class UserController {
         ModelAndView model = new ModelAndView();
         model.addObject("nickname", nickname);
         User user = userService.getUserByLogin(nickname);
-        if (Objects.nonNull(user)){
-            if(Objects.nonNull(user.getPicture())) {
+        if (Objects.nonNull(user)) {
+            if (Objects.nonNull(user.getPicture())) {
                 String image_string = Base64.getEncoder().encodeToString(user.getPicture());
                 model.addObject("image", image_string);
                 model.addObject("hasImage", true);
-            }
-            else {
+            } else {
                 model.addObject("hasImage", false);
             }
             model.addObject("nickname", user.getLogin());
@@ -62,18 +61,19 @@ public class UserController {
         model.setViewName("user_page");
         return model;
     }
+
     @GetMapping("/search")
     public String searchUser(Model model) {
         model.addAttribute("SendSearchUser", new SendSearchUser());
         return "search";
     }
+
     @PostMapping("/search")
     public String searchUserByNameSurnameOrNickname(Authentication authentication, Model model, @ModelAttribute SendSearchUser SendSearchUser) {
         List<User> userList = userService.getUserByNameSurnameOrNickname(SendSearchUser);
-        if(Objects.nonNull(userList)) {
+        if (Objects.nonNull(userList)) {
             model.addAttribute("HaveSearchResult", true);
-        }
-        else {
+        } else {
             model.addAttribute("HaveSearchResult", false);
         }
         model.addAttribute("UserList", userList);

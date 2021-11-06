@@ -39,33 +39,35 @@ public class ContactController {
         model.addAttribute("Friends", friends);
         return "/friends";
     }
+
     @PostMapping("/send_friend_request")
     String sendRequest(Authentication authentication, Model model, @ModelAttribute SendFriendRequest send_req) {
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User userFrom = principal.getUser();
         User userTo = userService.getUserByLogin(send_req.getFriendNickname());
-        boolean checkContactTo = contactService.checkIsContactExists(userFrom,userTo);
-        boolean checkContactFrom = contactService.checkIsContactExists(userTo,userFrom);
+        boolean checkContactTo = contactService.checkIsContactExists(userFrom, userTo);
+        boolean checkContactFrom = contactService.checkIsContactExists(userTo, userFrom);
 
-        if(Objects.nonNull(userTo) && !userFrom.getLogin().equals(userTo.getLogin()) && !checkContactTo && !checkContactFrom) {
+        if (Objects.nonNull(userTo) && !userFrom.getLogin().equals(userTo.getLogin()) && !checkContactTo && !checkContactFrom) {
             contactService.sendRequestFriend(userFrom, userTo, send_req.getRequestMessage());
             return "redirect:friends";
-        }
-        else
+        } else
             return "/error_friend_request";
     }
-    @RequestMapping(value = "/get_last_friend_request",method = RequestMethod.GET, produces = "application/json")
+
+    @RequestMapping(value = "/get_last_friend_request", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public SendFriendRequest getLastFriendRequest(Authentication authentication, @RequestParam("idOfPreviousContact") Long idOfPreviousContact){
+    public SendFriendRequest getLastFriendRequest(Authentication authentication, @RequestParam("idOfPreviousContact") Long idOfPreviousContact) {
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User friendTo = principal.getUser();
 
         Contact contact = contactService.getLastNotAcceptedRequest(friendTo);
-        if (Objects.isNull(contact) || contact.getId().equals(idOfPreviousContact)){
+        if (Objects.isNull(contact) || contact.getId().equals(idOfPreviousContact)) {
             return null;
         }
         return new SendFriendRequest(contact);
     }
+
     @PostMapping("/accept_friend_request")
     String acceptFriendRequest(Authentication authentication, Model model, @ModelAttribute SendFriendRequest send_req) {
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
@@ -74,8 +76,9 @@ public class ContactController {
         contactService.confirmRequest(userFrom, userTo);
         return "redirect:friends";
     }
+
     @PostMapping("/decline_friend_request")
-    String declineFriendRequest(Authentication authentication, Model model,@ModelAttribute SendFriendRequest send_req) {
+    String declineFriendRequest(Authentication authentication, Model model, @ModelAttribute SendFriendRequest send_req) {
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User userTo = principal.getUser();
         User userFrom = userService.getUserByLogin(send_req.getFriendNickname());

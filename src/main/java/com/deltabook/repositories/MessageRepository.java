@@ -19,10 +19,11 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
     Message findFirstByRecipientIDAndIsReadFalseOrderByCreatedAtDesc(User recipintId);
 
     String findMessagesBySenderIDAndRecipientID_query = "SELECT * FROM MESSAGES WHERE SENDER_ID = :senderId AND RECIPIENT_ID = :recipientId UNION ALL SELECT * FROM MESSAGES WHERE RECIPIENT_ID = :senderId AND SENDER_ID = :recipientId ORDER BY CREATED_AT";
+
     @Query(value = findMessagesBySenderIDAndRecipientID_query, nativeQuery = true)
     List<Message> findMessagesBetweenTwoUsers(@Param("senderId") User senderId, @Param("recipientId") User recipientId);
 
-    List <Message> findByRecipientID(User senderId);
+    List<Message> findByRecipientID(User senderId);
 
     List<Message> findByRecipientIDOrSenderIDOrderByCreatedAt(User senderId, User recipientId);
 }

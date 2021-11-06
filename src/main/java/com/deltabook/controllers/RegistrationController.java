@@ -31,14 +31,12 @@ public class RegistrationController {
 
     @GetMapping(value = "/checkStrength", produces = {"text/html; charset-UTF-8"})
     public @ResponseBody
-    String checkPassword(@RequestParam String password ) {
-        if(password.length() >= WEAK_STRENTH & password.length() < FEAR_STRENGTH  ) {
+    String checkPassword(@RequestParam String password) {
+        if (password.length() >= WEAK_STRENTH & password.length() < FEAR_STRENGTH) {
             return "слабый";
-        }
-        else if(password.length() >= FEAR_STRENGTH & password.length() < STRONG_STRENGTH) {
+        } else if (password.length() >= FEAR_STRENGTH & password.length() < STRONG_STRENGTH) {
             return "средний";
-        }
-        else if(password.length() >= STRONG_STRENGTH) {
+        } else if (password.length() >= STRONG_STRENGTH) {
             return "сильный";
         }
         return "";

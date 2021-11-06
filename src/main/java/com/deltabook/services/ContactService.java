@@ -8,11 +8,18 @@ import java.util.List;
 
 public interface ContactService {
     String sendRequestFriend(User fromUser, User toUser, String requestMessage);
+
     List<Contact> getAllRequestsFromUser(User user);
+
     List<Contact> getAllRequestsToUser(User user);
+
     List<SendFriend> getAllFriends(User user);
+
     void confirmRequest(User fromUser, User toUser);
+
     void declineRequest(User fromUser, User toUser);
+
     Contact getLastNotAcceptedRequest(User friendTo);
+
     boolean checkIsContactExists(User fromUser, User toUser);
 }
