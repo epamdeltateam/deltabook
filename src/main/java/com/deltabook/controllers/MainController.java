@@ -14,19 +14,17 @@ import java.util.Objects;
 @Controller
 public class MainController {
 
-    @RequestMapping(value="/")
+    @RequestMapping(value = "/")
     public ModelAndView mainPage(Authentication authentication, Model model) {
         model.addAttribute("objectToFill_auth", new User());
         ModelAndView modelAndView = new ModelAndView();
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User user = principal.getUser();
-        String image_string;
-        if (Objects.nonNull(user.getPicture())){
-            image_string = Base64.getEncoder().encodeToString(user.getPicture());
+        if (Objects.nonNull(user.getPicture())) {
+            String image_string = Base64.getEncoder().encodeToString(user.getPicture());
             modelAndView.addObject("image", image_string);
             modelAndView.addObject("hasImage", true);
-        }
-        else {
+        } else {
             modelAndView.addObject("hasImage", false);
         }
         modelAndView.addObject("name", user.getFirstName());

@@ -20,11 +20,11 @@ public class SendFriendRequest {
     public SendFriendRequest() {
     }
 
-    public SendFriendRequest(Contact contact){
+    public SendFriendRequest(Contact contact) {
         this.id = contact.getId();
         this.requestMessage = contact.getRequestMessage();
         this.timestamp = contact.getCreatedAt();
-        this.friendNickname =contact.getFriendFromId().getLogin();
+        this.friendNickname = contact.getFriendFromId().getLogin();
         if (contact.getFriendFromId().getPicture() != null) {
             this.picture = Base64.getEncoder().encodeToString(contact.getFriendFromId().getPicture());
         } else {
@@ -62,6 +62,7 @@ public class SendFriendRequest {
     public void setId(Long id) {
         this.id = id;
     }
+
     public Timestamp getTimestamp() {
         return timestamp;
     }
@@ -69,6 +70,7 @@ public class SendFriendRequest {
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
     }
+
     public String getPicture() {
         return picture;
     }

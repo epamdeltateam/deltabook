@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
-public class UserDetailsImpl  implements UserDetails {
+public class UserDetailsImpl implements UserDetails {
 
     private User user;
 
@@ -53,7 +53,7 @@ public class UserDetailsImpl  implements UserDetails {
         return !user.isDeleted();
     }
 
-    public User getUser(){
+    public User getUser() {
         return user;
     }
 }

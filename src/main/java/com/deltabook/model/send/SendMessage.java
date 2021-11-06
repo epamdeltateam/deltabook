@@ -14,11 +14,11 @@ public class SendMessage {
     public SendMessage() {
     }
 
-    public SendMessage(Message message){
+    public SendMessage(Message message) {
         this.id = message.getId();
-        this.nickName =message.getSenderID().getLogin();
+        this.nickName = message.getSenderID().getLogin();
         this.body = message.getBody();
-        this.timestamp =message.getCreatedAt();
+        this.timestamp = message.getCreatedAt();
         if (message.getSenderID().getPicture() != null) {
             this.picture = Base64.getEncoder().encodeToString(message.getSenderID().getPicture());
         } else {

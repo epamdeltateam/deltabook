@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/css/**", "/images/**", "/h2_console/*").permitAll()
                 .antMatchers("/login", "/registration").anonymous()
-                .antMatchers("/","/send_message","/friends","/upload_avatar","/get_last_message*", "/get_last_friend_request*", "/send_friend_request", "/proceed_friend_request", "/dialogs","/get_updated_dialog", "/dialog/**").authenticated()
+                .antMatchers("/", "/send_message", "/friends", "/upload_avatar", "/get_last_message*", "/get_last_friend_request*", "/send_friend_request", "/proceed_friend_request", "/dialogs", "/get_updated_dialog", "/dialog/**").authenticated()
                 .antMatchers("/main_admin", "/delete_user*", "/change_user_last_name*").hasRole("ADMIN")
                 .and()
                 .formLogin()

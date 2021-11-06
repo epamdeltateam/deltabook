@@ -16,11 +16,11 @@ public interface MessageService {
 
     List<Message> getDialog(User recipientId, User senderId);
 
-    List <User> getAllChatCompanionsOfUser(User user);
+    List<User> getAllChatCompanionsOfUser(User user);
 
     List<Message> generatedDialogBetweenUsers(User recipient, User sender, String principalLogin);
 
-    List<Message>  UpdatedDialogBetweenUsers(String recipient, String sender, Authentication authentication, Model model);
+    List<Message> UpdatedDialogBetweenUsers(String recipient, String sender, Authentication authentication, Model model);
 
     void UpdateMessage(Message message);
 

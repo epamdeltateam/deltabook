@@ -23,9 +23,10 @@ public class MessageServiceImpl implements MessageService {
     @Autowired
     private MessageRepository messageRepository;
 
+    @Override
     public Message sendMessage(User userFrom, SendMessage sendMessage) {
         User userTo = userRepository.findUserByLogin(sendMessage.getNickName());
-        if(Objects.isNull(userTo)) return null;
+        if (Objects.isNull(userTo)) return null;
         String messageBody = sendMessage.getBody();
         return messageRepository.save(new Message(userFrom, userTo, messageBody));
     }
@@ -47,8 +48,7 @@ public class MessageServiceImpl implements MessageService {
         for (Message msg : messageList) {
             if (msg.getSenderID().equals(user)) {
                 setOfUsers.add(msg.getRecipientID());
-            }
-            else {
+            } else {
                 setOfUsers.add(msg.getSenderID());
             }
         }
@@ -58,15 +58,18 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<Message> generatedDialogBetweenUsers(User userRecipient, User userSender, String principalLogin) {
-        return getDialog(userRecipient,userSender );
+        return getDialog(userRecipient, userSender);
     }
-    public List<Message>  UpdatedDialogBetweenUsers(String recipient, String sender, Authentication authentication, Model model) {
+
+    @Override
+    public List<Message> UpdatedDialogBetweenUsers(String recipient, String sender, Authentication authentication, Model model) {
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User userRecipient = userRepository.findUserByLogin(recipient);
         User userSender = userRepository.findUserByLogin(sender);
-        return getDialog(userRecipient,userSender );
+        return getDialog(userRecipient, userSender);
     }
 
+    @Override
     public void UpdateMessage(Message message) {
         messageRepository.saveAndFlush(message);
     }
