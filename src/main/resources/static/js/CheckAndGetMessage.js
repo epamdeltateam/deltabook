@@ -15,8 +15,8 @@ function CheckAndGetMessage() {
             SendMessage += '<p>' + result.body  + '</p>' ;
             old_message_id = result.id;
             $('#MessageForCurrentUser').html(SendMessage);
-            var col = document.getElementById("MessageForCurrentUser");
-            col.classList.toggle("show");
+            var col = $("#MessageForCurrentUser");
+            col.toggleClass("show");
             MessageText = SendMessage;
         },
         error: function(){
@@ -39,8 +39,8 @@ function CheckAndGetFriendRequest() {
             ContactMesssge += "<p>" + result.requestMessage + "</p>" ;
             old_friend_request_id = result.id;
             $('#FriendRequestForCurrentUser').html(ContactMesssge);
-            var col = document.getElementById("FriendRequestForCurrentUser");
-            col.classList.toggle("show");
+            var col = $("#FriendRequestForCurrentUser");
+            col.toggleClass("show");
             ContactText = ContactMesssge;
         },
         error: function(){
@@ -58,13 +58,13 @@ function Check() {
     //alert($(MessageForCurrentUser).is(":visible"));
     if ($(MessageForCurrentUser).is(":hidden") && MessageText != "") {
         $('#MessageForCurrentUser').html(MessageText);
-        var col = document.getElementById("MessageForCurrentUser");
-        col.classList.toggle("show");
+        var col = $("#MessageForCurrentUser");
+        col.toggleClass("show");
     }
     if ($(FriendRequestForCurrentUser).is(":hidden") && ContactText != "") {
         $('#FriendRequestForCurrentUser').html(ContactText);
-        var col = document.getElementById("FriendRequestForCurrentUser");
-        col.classList.toggle("show");
+        var col = $("#FriendRequestForCurrentUser");
+        col.toggleClass("show");
     }
 }
 setInterval(Check,1000);
