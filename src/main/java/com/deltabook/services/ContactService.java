@@ -3,7 +3,6 @@ package com.deltabook.services;
 import com.deltabook.model.Contact;
 import com.deltabook.model.User;
 import com.deltabook.model.send.SendFriend;
-import com.deltabook.model.send.SendFriendRequest;
 
 import java.util.List;
 

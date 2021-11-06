@@ -12,11 +12,6 @@ public class MainErrorController implements ErrorController {
         return "error";
     }
 
-    @Override
-    public String getErrorPath() {
-        return "/error";
-    }
-
     @RequestMapping("/error_auth")
     public String authError() {
         return "error_auth";
