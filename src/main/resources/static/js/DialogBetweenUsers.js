@@ -23,14 +23,17 @@ function json2table(json, classes) {
     json.map(function(row) {
 
         cols.map(function(colName) {
-            if(colName == 'id') return;
-            if(colName == 'timestamp') return;
-            if(colName == 'body') {bodyRows += '<tr>' + '<td>'+ row[colName] + '</td>' + '</tr>' ; return;}
-            if(colName == 'nickName') {
+            if (colName == 'id') return;
+            if (colName == 'timestamp') return;
+            if (colName == 'body') {
+            bodyRows += '<tr>' + '<td>'+ row[colName] + '</td>' + '</tr>';
+            return;
+            }
+            if (colName == 'nickName') {
                 bodyRows += '<tr>' + '<td>'+ '<a class="user_link" href=/' + row[colName] +'>' + row[colName] + '</a>' + '</td>' + '</tr>' ;
                 return;
             }
-            if(colName == 'picture') {
+            if (colName == 'picture') {
                 bodyRows += '<tr>' + '<td>'+ '<img class="very_reduced_avatar" src="data:image/png;base64,' + row[colName] + '" alt="" />' + '</td>' + '</tr>' ;
                 return;
             }
@@ -55,13 +58,16 @@ function CheckAndGetMessage() {
             document.getElementById('messageTable').innerHTML = json2table(messageList, 'table');
 
             var dom = {
-                data: document.getElementById('data'),
-                table: document.getElementById('messageTable'),
+                data: $('#data'),
+                table: $('#messageTable'),
             };
 
+            if (dom.data === null) {
+            return;
+            }
             dom.data.value = JSON.stringify(messageList);
-            dom.data.addEventListener('input', function() {
-                dom.table.innerHTML = json2table(JSON.parse(messageList), 'table');
+            dom.data.on('input', function() {
+                dom.table.append = json2table(JSON.parse(messageList), 'table');
             });
             return;
         },
@@ -87,12 +93,16 @@ function sendDataOfForm(theForm) {
             document.getElementById('messageTable').innerHTML = json2table(messageList, 'table');
 
             var dom = {
-                data: document.getElementById('data'),
-                table: document.getElementById('messageTable'),
+                data: $('#data'),
+                table: $('messageTable'),
             };
 
+            if (dom.data === null) {
+            return;
+            }
+
             dom.data.value = JSON.stringify(messageList);
-            dom.data.addEventListener('input', function() {
+            dom.data.on('input', function() {
                 dom.table.innerHTML = json2table(JSON.parse(messageList), 'table');
             });
             return;
