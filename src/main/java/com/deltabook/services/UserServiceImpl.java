@@ -66,6 +66,9 @@ public class UserServiceImpl implements UserService {
     }
     public void changeLastNameUser(SendChangeUser SendChangeUser) {
         User user = userRepository.findUserByLogin(SendChangeUser.getNickName());
+        if(user == null) {
+            throw new IllegalArgumentException("User not found");
+        }
         user.setLastName(SendChangeUser.getNewLastName());
         userRepository.save(user);
     }
