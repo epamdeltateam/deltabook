@@ -19,11 +19,11 @@ public interface UserService {
 
     User uploadAvatar(User user, MultipartFile file) throws Exception;
 
-    void changeLastNameUser(SendChangeUser SendChangeUser);
+    void changeLastNameUser(SendChangeUser sendChangeUser, User user);
 
-    void deleteUserTotal(SendChangeUser SendChangeUser);
+    void deleteUserTotal(User user);
 
-    void deleteUserTemp(SendChangeUser SendChangeUser);
+    void deleteUserTemp(User user);
 
-    List<User> getUserByNameSurnameOrNickname(SendSearchUser SendSearchUser);
+    List<User> getUserByNameSurnameOrNickname(SendSearchUser sendChangeUser);
 }

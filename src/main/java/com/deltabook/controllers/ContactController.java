@@ -27,7 +27,7 @@ public class ContactController {
     private UserService userService;
 
     @GetMapping("/friends")
-    String sendRequest(Authentication authentication, Model model) {
+    private String sendRequest(Authentication authentication, Model model) {
         model.addAttribute("sendFriendRequest", new SendFriendRequest());
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User userTo = principal.getUser();
@@ -41,23 +41,32 @@ public class ContactController {
     }
 
     @PostMapping("/send_friend_request")
-    String sendRequest(Authentication authentication, Model model, @ModelAttribute SendFriendRequest send_req) {
+    private String sendRequest(Authentication authentication, Model model, @ModelAttribute SendFriendRequest send_req) {
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User userFrom = principal.getUser();
         User userTo = userService.getUserByLogin(send_req.getFriendNickname());
-        boolean checkContactTo = contactService.checkIsContactExists(userFrom, userTo);
-        boolean checkContactFrom = contactService.checkIsContactExists(userTo, userFrom);
 
-        if (Objects.nonNull(userTo) && !userFrom.getLogin().equals(userTo.getLogin()) && !checkContactTo && !checkContactFrom) {
+        String errorText = null;
+
+        if (Objects.isNull(userTo)) {
+            errorText = "Пользователя с таким никнеймом не существует!";
+        }
+        if (userTo != null && userFrom.getLogin().equals(userTo.getLogin())) {
+            errorText = "Вы не можете отправить приглашение самому себе!";
+        }
+
+        if (errorText == null) {
             contactService.sendRequestFriend(userFrom, userTo, send_req.getRequestMessage());
             return "redirect:friends";
-        } else
+        } else {
+            model.addAttribute("errorText", errorText);
             return "/error_friend_request";
+        }
     }
 
     @RequestMapping(value = "/get_last_friend_request", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public SendFriendRequest getLastFriendRequest(Authentication authentication, @RequestParam("idOfPreviousContact") Long idOfPreviousContact) {
+    private SendFriendRequest getLastFriendRequest(Authentication authentication, @RequestParam("idOfPreviousContact") Long idOfPreviousContact) {
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User friendTo = principal.getUser();
 
@@ -69,7 +78,7 @@ public class ContactController {
     }
 
     @PostMapping("/accept_friend_request")
-    String acceptFriendRequest(Authentication authentication, Model model, @ModelAttribute SendFriendRequest send_req) {
+    private String acceptFriendRequest(Authentication authentication, @ModelAttribute SendFriendRequest send_req) {
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User userTo = principal.getUser();
         User userFrom = userService.getUserByLogin(send_req.getFriendNickname());
@@ -78,7 +87,7 @@ public class ContactController {
     }
 
     @PostMapping("/decline_friend_request")
-    String declineFriendRequest(Authentication authentication, Model model, @ModelAttribute SendFriendRequest send_req) {
+    private String declineFriendRequest(Authentication authentication, @ModelAttribute SendFriendRequest send_req) {
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User userTo = principal.getUser();
         User userFrom = userService.getUserByLogin(send_req.getFriendNickname());

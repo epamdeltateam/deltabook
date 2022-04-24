@@ -71,18 +71,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changeLastNameUser(SendChangeUser SendChangeUser) {
-        User user = userRepository.findUserByLogin(SendChangeUser.getNickName());
+    public void changeLastNameUser(SendChangeUser sendChangeUser, User user) {
         if (user == null) {
             throw new IllegalArgumentException("User not found");
         }
-        user.setLastName(SendChangeUser.getNewLastName());
+        user.setLastName(sendChangeUser.getNewLastName());
         userRepository.save(user);
     }
 
     @Override
-    public void deleteUserTotal(SendChangeUser SendChangeUser) {
-        User user = userRepository.findUserByLogin(SendChangeUser.getNickName());
+    public void deleteUserTotal(User user) {
         if (user == null) {
             throw new IllegalArgumentException("User not found");
         }
@@ -90,8 +88,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUserTemp(SendChangeUser SendChangeUser) {
-        User user = userRepository.findUserByLogin(SendChangeUser.getNickName());
+    public void deleteUserTemp(User user) {
         if (user == null) {
             throw new IllegalArgumentException("User not found");
         }
@@ -100,11 +97,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUserByNameSurnameOrNickname(SendSearchUser SendSearchUser) {
+    public List<User> getUserByNameSurnameOrNickname(SendSearchUser sendSearchUser) {
         User user;
         List<User> userList = new ArrayList<>();
-        if (!SendSearchUser.getNickname().equals("")) {
-            user = getUserByLogin(SendSearchUser.getNickname());
+        if (!sendSearchUser.getNickname().equals("")) {
+            user = getUserByLogin(sendSearchUser.getNickname());
             if (Objects.nonNull(user)) {
                 userList.add(user);
                 return userList;
@@ -112,16 +109,16 @@ public class UserServiceImpl implements UserService {
                 return null;
             }
         }
-        if (!SendSearchUser.getName().equals("") && !SendSearchUser.getSurname().equals("")) {
-            userList = userRepository.findByLastNameAndFirstName(SendSearchUser.getSurname(), SendSearchUser.getName());
+        if (!sendSearchUser.getName().equals("") && !sendSearchUser.getSurname().equals("")) {
+            userList = userRepository.findByLastNameAndFirstName(sendSearchUser.getSurname(), sendSearchUser.getName());
             return userList;
         }
-        if (SendSearchUser.getName().equals("") && !SendSearchUser.getSurname().equals("")) {
-            userList = userRepository.findByLastName(SendSearchUser.getSurname());
+        if (sendSearchUser.getName().equals("") && !sendSearchUser.getSurname().equals("")) {
+            userList = userRepository.findByLastName(sendSearchUser.getSurname());
             return userList;
         }
-        if (!SendSearchUser.getName().equals("") && SendSearchUser.getSurname().equals("")) {
-            userList = userRepository.findByFirstName(SendSearchUser.getName());
+        if (!sendSearchUser.getName().equals("") && sendSearchUser.getSurname().equals("")) {
+            userList = userRepository.findByFirstName(sendSearchUser.getName());
             return userList;
         }
         return null;

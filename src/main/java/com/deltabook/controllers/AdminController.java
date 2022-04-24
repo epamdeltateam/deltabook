@@ -16,49 +16,81 @@ public class AdminController {
     @Autowired
     private UserService userService;
     private final static String USER_CAN_NOT_DELETE_HIMSELF_ERROR = "Пользователь не может удалить сам себя.";
+    private final static String USER_DOES_NOT_EXIST_ERROR = "Пользователя с таким никнеймом не существует!";
 
     @RequestMapping("/main_admin")
-    public String mainAdmin(Authentication authentication, Model model) {
+    private String mainAdmin(Authentication authentication, Model model) {
         model.addAttribute("SendChangeUser", new SendChangeUser());
         return "main_admin";
     }
 
     @RequestMapping("/change_user_last_name")
-    public String changeUserLastName(Model model, @ModelAttribute SendChangeUser sendChangeUser) {
+    private String changeUserLastName(Model model, @ModelAttribute SendChangeUser sendChangeUser) {
         String newLastName = sendChangeUser.getNewLastName();
-        if(newLastName != null && !newLastName.isEmpty()) {
-            userService.changeLastNameUser(sendChangeUser);
-            model.addAttribute("SendChangeUser", new SendChangeUser());
-            return "main_admin";
+        String errorText = null;
+        User user = null;
+
+        if(newLastName == null || newLastName.isEmpty()) {
+            errorText = "Новая фамилия не может быть пустой строкой.";
         }
         else {
-            model.addAttribute("errorText", "Новая фамилия не может быть пустой строкой.");
+            user = userService.getUserByLogin(sendChangeUser.getNickName());
+            if(user == null) {
+                errorText = USER_DOES_NOT_EXIST_ERROR;
+            }
+        }
+
+        if (errorText == null) {
+            userService.changeLastNameUser(sendChangeUser, user);
+            return "main_admin";
+        } else {
+            model.addAttribute("errorText", errorText);
             return "error";
         }
     }
 
     @RequestMapping("/delete_user_temp")
-    public String deleteUserTemp(Authentication authentication, Model model, @ModelAttribute SendChangeUser sendChangeUser) {
-        model.addAttribute("SendChangeUser", new SendChangeUser());
+    private String deleteUserTemp(Authentication authentication, Model model, @ModelAttribute SendChangeUser sendChangeUser) {
         User currentUser = ((UserDetailsImpl) authentication.getPrincipal()).getUser();
-        if (!sendChangeUser.getNickName().equals(currentUser.getLogin())) {
-            userService.deleteUserTemp(sendChangeUser);
+        String errorText = null;
+        User user = null;
+        if (sendChangeUser.getNickName().equals(currentUser.getLogin())) {
+            errorText = USER_CAN_NOT_DELETE_HIMSELF_ERROR;
+        } else {
+            user = userService.getUserByLogin(sendChangeUser.getNickName());
+            if (user == null) {
+                errorText = USER_DOES_NOT_EXIST_ERROR;
+            }
+        }
+
+        if (errorText == null) {
+            userService.deleteUserTemp(user);
             return "main_admin";
         } else {
-            model.addAttribute("errorText", USER_CAN_NOT_DELETE_HIMSELF_ERROR);
+            model.addAttribute("errorText", errorText);
             return "error";
         }
     }
 
     @RequestMapping("/delete_user_total")
-    public String deleteUserTotal(Authentication authentication, Model model, @ModelAttribute SendChangeUser sendChangeUser) {
-        model.addAttribute("SendChangeUser", new SendChangeUser());
+    private String deleteUserTotal(Authentication authentication, Model model, @ModelAttribute SendChangeUser sendChangeUser) {
         User currentUser = ((UserDetailsImpl) authentication.getPrincipal()).getUser();
-        if (!sendChangeUser.getNickName().equals(currentUser.getLogin())) {
-            userService.deleteUserTotal(sendChangeUser);
+        String errorText = null;
+        User user = null;
+        if (sendChangeUser.getNickName().equals(currentUser.getLogin())) {
+            errorText = USER_CAN_NOT_DELETE_HIMSELF_ERROR;
+        } else {
+            user = userService.getUserByLogin(sendChangeUser.getNickName());
+            if (user == null) {
+                errorText = USER_DOES_NOT_EXIST_ERROR;
+            }
+        }
+
+        if (errorText == null) {
+            userService.deleteUserTotal(user);
             return "main_admin";
         } else {
-            model.addAttribute("errorText", USER_CAN_NOT_DELETE_HIMSELF_ERROR);
+            model.addAttribute("errorText", errorText);
             return "error";
         }
     }
