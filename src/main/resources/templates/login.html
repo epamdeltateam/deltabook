@@ -44,10 +44,10 @@
                     <div class="d-flex justify-content-center links">
                         У вас нет аккаунта? <a href="/registration" class="ml-2">Регистрация</a>
                     </div>
-                    <div th:if="${param.error}" class="ml-2">
+                    <div class="ml-2 d-flex justify-content-center" th:if="${param.error}">
                         Неправильный логин или пароль
                     </div>
-                    <div th:if="${param.logout}" class="ml-2">
+                    <div class="ml-2 d-flex justify-content-center" th:if="${param.logout}">
                         Вы вышли из своего аккаунта
                     </div>
                 </div>
