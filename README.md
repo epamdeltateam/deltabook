@@ -1,8 +1,8 @@
 # DeltaBook project
 ## It is a social network with a basic features
 ### Project stack:
-* Java 8
-* Spring Boot 2.6.7
+* Java 21
+* Spring Boot 4.1.0
 * Thymeleaf
 * H2 DB
 * Junit

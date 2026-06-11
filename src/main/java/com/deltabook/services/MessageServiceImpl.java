@@ -38,7 +38,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<Message> getDialog(User recipientId, User senderId) {
-        return messageRepository.findMessagesBetweenTwoUsers(senderId, recipientId);
+        return messageRepository.findMessagesBetweenTwoUsers(senderId.getId(), recipientId.getId());
     }
 
     @Override

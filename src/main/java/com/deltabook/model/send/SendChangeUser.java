@@ -1,23 +1,24 @@
 package com.deltabook.model.send;
 
 public class SendChangeUser {
-    private String NickName;
+
+    private String nickName;
 
     public String getNickName() {
-        return NickName;
+        return nickName;
     }
 
     public void setNickName(String nickName) {
-        NickName = nickName;
+        this.nickName = nickName;
     }
 
     public String getNewLastName() {
-        return NewLastName;
+        return newLastName;
     }
 
     public void setNewLastName(String newLastName) {
-        NewLastName = newLastName;
+        this.newLastName = newLastName;
     }
 
-    private String NewLastName;
+    private String newLastName;
 }

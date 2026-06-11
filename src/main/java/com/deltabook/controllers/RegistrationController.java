@@ -20,7 +20,7 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    private String registerUser(Model model, @ModelAttribute User insertedObject) {
+    public String registerUser(Model model, @ModelAttribute User insertedObject) {
         StringBuilder errorSb = new StringBuilder();
         if (insertedObject.getLogin().isEmpty()) {
             errorSb.append("Поле с никнеймом не может быть пустым. <br>");
@@ -44,7 +44,7 @@ public class RegistrationController {
     }
 
     @GetMapping(value = "/checkStrength", produces = {"text/html; charset-UTF-8"})
-    private @ResponseBody
+    public @ResponseBody
     String checkPassword(@RequestParam String password) {
         final int WEAK_STRENTH = 1;
         final int FEAR_STRENGTH = 5;
