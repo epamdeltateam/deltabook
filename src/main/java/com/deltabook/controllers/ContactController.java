@@ -27,7 +27,7 @@ public class ContactController {
     private UserService userService;
 
     @GetMapping("/friends")
-    private String sendRequest(Authentication authentication, Model model) {
+    public String sendRequest(Authentication authentication, Model model) {
         model.addAttribute("sendFriendRequest", new SendFriendRequest());
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User userTo = principal.getUser();
@@ -41,7 +41,7 @@ public class ContactController {
     }
 
     @PostMapping("/send_friend_request")
-    private String sendRequest(Authentication authentication, Model model, @ModelAttribute SendFriendRequest send_req) {
+    public String sendRequest(Authentication authentication, Model model, @ModelAttribute SendFriendRequest send_req) {
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User userFrom = principal.getUser();
         User userTo = userService.getUserByLogin(send_req.getFriendNickname());
@@ -66,7 +66,7 @@ public class ContactController {
 
     @RequestMapping(value = "/get_last_friend_request", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    private SendFriendRequest getLastFriendRequest(Authentication authentication, @RequestParam("idOfPreviousContact") Long idOfPreviousContact) {
+    public SendFriendRequest getLastFriendRequest(Authentication authentication, @RequestParam("idOfPreviousContact") Long idOfPreviousContact) {
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User friendTo = principal.getUser();
 
@@ -78,7 +78,7 @@ public class ContactController {
     }
 
     @PostMapping("/accept_friend_request")
-    private String acceptFriendRequest(Authentication authentication, @ModelAttribute SendFriendRequest send_req) {
+    public String acceptFriendRequest(Authentication authentication, @ModelAttribute SendFriendRequest send_req) {
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User userTo = principal.getUser();
         User userFrom = userService.getUserByLogin(send_req.getFriendNickname());
@@ -87,7 +87,7 @@ public class ContactController {
     }
 
     @PostMapping("/decline_friend_request")
-    private String declineFriendRequest(Authentication authentication, @ModelAttribute SendFriendRequest send_req) {
+    public String declineFriendRequest(Authentication authentication, @ModelAttribute SendFriendRequest send_req) {
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User userTo = principal.getUser();
         User userFrom = userService.getUserByLogin(send_req.getFriendNickname());

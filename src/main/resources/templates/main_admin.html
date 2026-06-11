@@ -23,8 +23,8 @@
 <h1>Смена фамилии у пользователя</h1>
 <form action="#" th:action="@{/change_user_last_name}" th:object="${SendChangeUser}" method="post">
     <div class = "form">
-    <input class="form-control input-lg" type="text" th:field="*{NickName}" placeholder="Никнейм пользователя"/>
-    <input class="form-control input-lg" type="text" th:field="*{NewLastName}" placeholder="Новая фамилия пользователя"/>
+    <input class="form-control input-lg" type="text" th:field="*{nickName}" placeholder="Никнейм пользователя"/>
+    <input class="form-control input-lg" type="text" th:field="*{newLastName}" placeholder="Новая фамилия пользователя"/>
         <input class="btn btn-warning" type="submit"  value="Отправить" />
     </div>
 </form>

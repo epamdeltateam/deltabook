@@ -28,13 +28,13 @@ public class MessageController {
     MessageService messageService;
 
     @GetMapping("/send_message")
-    String sendMessage(Model model) {
+    public String sendMessage(Model model) {
         model.addAttribute("sendMessage", new SendMessage());
         return "send_message";
     }
 
     @PostMapping("/send_message")
-    String sendMessage(Authentication authentication, Model model, @ModelAttribute SendMessage recipient) {
+    public String sendMessage(Authentication authentication, Model model, @ModelAttribute SendMessage recipient) {
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User userFrom = principal.getUser();
         Message message = messageService.sendMessage(userFrom, recipient);
@@ -58,7 +58,7 @@ public class MessageController {
     }
 
     @GetMapping("/dialogs")
-    String dialogs(Authentication authentication, Model model) {
+    public String dialogs(Authentication authentication, Model model) {
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         User userRecipient = principal.getUser();
         List<User> sendersList = messageService.getAllChatCompanionsOfUser(userRecipient);

@@ -19,13 +19,13 @@ public class AdminController {
     private final static String USER_DOES_NOT_EXIST_ERROR = "Пользователя с таким никнеймом не существует!";
 
     @RequestMapping("/main_admin")
-    private String mainAdmin(Authentication authentication, Model model) {
+    public String mainAdmin(Authentication authentication, Model model) {
         model.addAttribute("SendChangeUser", new SendChangeUser());
         return "main_admin";
     }
 
     @RequestMapping("/change_user_last_name")
-    private String changeUserLastName(Model model, @ModelAttribute SendChangeUser sendChangeUser) {
+    public String changeUserLastName(Model model, @ModelAttribute SendChangeUser sendChangeUser) {
         String newLastName = sendChangeUser.getNewLastName();
         String errorText = null;
         User user = null;
@@ -42,15 +42,15 @@ public class AdminController {
 
         if (errorText == null) {
             userService.changeLastNameUser(sendChangeUser, user);
-            return "main_admin";
+            return "redirect:/main_admin";
         } else {
             model.addAttribute("errorText", errorText);
-            return "error";
+            return "redirect:/error";
         }
     }
 
     @RequestMapping("/delete_user_temp")
-    private String deleteUserTemp(Authentication authentication, Model model, @ModelAttribute SendChangeUser sendChangeUser) {
+    public String deleteUserTemp(Authentication authentication, Model model, @ModelAttribute SendChangeUser sendChangeUser) {
         User currentUser = ((UserDetailsImpl) authentication.getPrincipal()).getUser();
         String errorText = null;
         User user = null;
@@ -65,15 +65,15 @@ public class AdminController {
 
         if (errorText == null) {
             userService.deleteUserTemp(user);
-            return "main_admin";
+            return "redirect:/main_admin";
         } else {
             model.addAttribute("errorText", errorText);
-            return "error";
+            return "redirect:/error";
         }
     }
 
     @RequestMapping("/delete_user_total")
-    private String deleteUserTotal(Authentication authentication, Model model, @ModelAttribute SendChangeUser sendChangeUser) {
+    public String deleteUserTotal(Authentication authentication, Model model, @ModelAttribute SendChangeUser sendChangeUser) {
         User currentUser = ((UserDetailsImpl) authentication.getPrincipal()).getUser();
         String errorText = null;
         User user = null;
@@ -88,10 +88,10 @@ public class AdminController {
 
         if (errorText == null) {
             userService.deleteUserTotal(user);
-            return "main_admin";
+            return "redirect:/main_admin";
         } else {
             model.addAttribute("errorText", errorText);
-            return "error";
+            return "redirect:/error";
         }
     }
 
